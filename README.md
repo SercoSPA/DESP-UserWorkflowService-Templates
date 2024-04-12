@@ -6,3 +6,8 @@ This set of Jupyter Notebook tutorials equips users with the skills to access an
 * [How to access LUMI's Extremes Digital Twin data using earthkit and the Polytope API](./polytope-earthkit.ipynb)
 
 More information at https://destine.eu.
+
+## Credits
+
+* `climates-dt-sfc.ipynb` is largely inspired by the inputs provided by the [Earth Data Hub use cases](https://earthdatahub.com/use-cases).
+* `polytope-earthkit.ipynb` is a slightly modified version of the example available [here](https://github.com/destination-earth-digital-twins/polytope-examples/). `desp-authentication.py` was also retrieved from the same source.

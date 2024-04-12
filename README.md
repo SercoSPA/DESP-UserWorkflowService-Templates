@@ -1,9 +1,8 @@
-# DESP Jupyter Examples for the User Workflow
+# DestinE Jupyter Notebook Tutorials for the Insula's Code Lab
 
-A set of Jupyter Notebook examples showing the usage of the [DESP Platform's API](https://to-be.done/), in particular:
+This set of Jupyter Notebook tutorials equips users with the skills to access and exploit Digital Twin data from DestinE for the Insula Code Lab.
 
-* [Data Workflow Access & Discovery](./Discover_and_Access.ipynb)
-* [User Workflow Data Collections](./Data_Collections.ipynb)
-* [User Workflow Processing Services](./Processing_Services.ipynb)
+* [How to work with Climate Adaptation Digital Twin data on Earth Data Hub: fields on a single level or surface, standard resolution](./climate-dt-sfc.ipynb)
+* [How to access LUMI's Extremes Digital Twin data using earthkit and the Polytope API](./polytope-earthkit.ipynb)
 
-More information at https://desp.space.
+More information at [https://destine.eu].

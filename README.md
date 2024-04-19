@@ -9,5 +9,5 @@ If you have questions or need support with these examples, contact the support a
 
 ## Credits
 
-* `cacheb-climate-example.ipynb` original content created by Earth Data Hub. 
+* `cacheb-climate-example.ipynb` original content created by B-Open (Earth Data Hub). 
 * `polytope-earthkit.ipynb` and `desp-authentication.py` are a slightly modified version of the examples available at [Destination Earth Digital Twins's polytope examples](https://github.com/destination-earth-digital-twins/polytope-examples/) by ECMWF.

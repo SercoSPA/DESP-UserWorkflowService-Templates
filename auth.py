@@ -22,8 +22,7 @@ username = getpass.getpass('Type your username : ')
 #password = input('Type your password :')
 password = getpass.getpass('Type your password : ')
 
-# username = "mantovani@meeo.it"
-# password = "m1rc1m4_M!"
+
 class Settings(BaseSettings):
     #AUTH
     KEYCLOAK_URL: str = "https://auth.destine.eu/"
@@ -32,8 +31,7 @@ class Settings(BaseSettings):
     KEYCLOAK_REDIRECT_URL: str = "https://broker.eden.destine.eu/api/v1/authentication/callback"
     KEYCLOAK_CLIENTID: str = "hda-broker-public"
 
-    # KEYCLOAK_USERNAME: str = "mantovani@meeo.it"
-    # KEYCLOAK_PASSWORD: str = "m1rc1m4_M!"
+    
     KEYCLOAK_USERNAME: str = username
     KEYCLOAK_PASSWORD: str = password
 

@@ -6,35 +6,38 @@ This set of Jupyter Notebook tutorials equips users with the skills to access an
 * [How to access LUMI's Extremes Digital Twin data using earthkit and the Polytope API](./polytope/polytope-earthkit.ipynb): this example supports the user to retrieve Weather Extremes DT data from Polytope and visualize it.
 * [How to discover and access data from DestinE Platform](./EDEN/EDEN-example.ipynb): this example supports the user in discover and access DestinE data through EDEN Service.
 
-## Installation
-The collection of Jupyter Notebooks tutorials is seamlessly integrated into your personal Insula Code Lab user environment. To execute these tutorials, simply follow the instructions provided below to install a Python virtual environment.
-### Create a virtual environment
-Open a Terminal window and create a virtual environment named `getting_started`: 
-```
-python -m venv /home/jovyan/getting_started
-```
-Activate it:
-```
-source /home/jovyan/getting_started/bin/activate
-```
-### Install dependencies
-We collected the needed dependencies in the requirements file `requirements.txt` [here](./requirements.txt). Install these dependencies within the `getting_started` created at the step above.
-```
-pip install -r requirements.txt
-```
-> **Note**: These requirements are frozen as of the latest update of this repository, meaning the module versions specified reflect a snapshot of dependencies at that specific point in time.
-
-Install the Jupyter kernel `getting_started`:
-```
-ipython kernel install --user --name=getting_started
-```
-> **Note**: Do not forget to change the kernel to `getting_started` every time you want to run the Insula Code Lab Jupyter tutorials.
-
 ## Credits
 
 * `cacheb-climate-example.ipynb` and `cacheb-authentication` original content created by B-Open (Earth Data Hub). 
 * `polytope-earthkit.ipynb` and `desp-authentication.py` are a slightly modified version of the examples available at [Destination Earth Digital Twins's polytope examples](https://github.com/destination-earth-digital-twins/polytope-examples/) by ECMWF.
 * `EDEN-example.ipynb` and `auth.py` original content created by MEEO (EDEN).
+
+## Installation
+The collection of Jupyter Notebooks tutorials is seamlessly integrated into the Insula Code Lab Python environment for all users. Installed Python dependencies are provided in the file [requirements.txt](./requirements.txt) .
+
+More expert users can create their own Python virtual environment following the instructions provided below.
+### Create a virtual environment
+Open a Terminal window and create a virtual environment named `my_env`: 
+```
+python -m venv /home/jovyan/my_env
+```
+Activate it:
+```
+source /home/jovyan/my_env/bin/activate
+```
+### Install dependencies
+Users can install Python dependencies via `pip` channel singularly or in a batch by means of a `requirements.txt` file:
+
+```
+pip install -r requirements.txt
+```
+> **Note**: Pre-installed Python requirements are frozen as of the latest release of Insula Code Lab, meaning package versions reflect a snapshot of dependencies currently running in the user environment.
+
+Install the Jupyter kernel `my_env`:
+```
+ipython kernel install --user --name=my_env
+```
+> **Note**: Do not forget to change the kernel to `my_env` using the upper-right button within the Jupyter user interface every time you want to run your code.
 
 ## Contact
 If you have questions or need support with these examples, contact the support at https://platform.destine.eu/support.

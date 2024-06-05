@@ -7,23 +7,24 @@ import requests
 from conflator import CLIArg, ConfigModel, Conflator, EnvVar
 from lxml import html
 from pydantic import Field
+import getpass
 
 SERVICE_URL = "https://cacheb.dcms.destine.eu/"
 
 
 class Config(ConfigModel):
     user: Annotated[
-        str,
+        str | None,
         Field(description="Your DESP username"),
         CLIArg("-u", "--user"),
         EnvVar("USER"),
-    ]
+    ] = None
     password: Annotated[
-        str,
+        str | None,
         Field(description="Your DESP password"),
         CLIArg("-p", "--password"),
         EnvVar("PASSWORD"),
-    ]
+    ] = None
     iam_url: Annotated[
         str,
         Field(description="The URL of the IAM server"),
@@ -46,9 +47,21 @@ class Config(ConfigModel):
 
 config = Conflator("despauth", Config).load()
 
-print(f"# Authenticating on {config.iam_url} with user {config.user}")
+if config.user is None:
+    user = input("Username: ")
+else:
+    user = config.user
+
+if config.password is None:
+    password = getpass.getpass("Password: ")
+else:
+    password = config.password
+
+
+print(f"# Authenticating on {config.iam_url} with user {user}")
 
 with requests.Session() as s:
+
     # Get the auth url
     response = s.get(
         url=config.iam_url
@@ -69,8 +82,8 @@ with requests.Session() as s:
     login = s.post(
         auth_url,
         data={
-            "username": config.user,
-            "password": config.password,
+            "username": user,
+            "password": password,
         },
         allow_redirects=False,
     )

@@ -13,9 +13,9 @@ This set of Jupyter Notebook tutorials equips users with the skills to access an
 * `EDEN-example.ipynb` and `auth.py` original content created by MEEO (EDEN).
 
 ## Installation
-The collection of Jupyter Notebooks tutorials is seamlessly integrated into the Insula Code Lab Python environment for all users. Installed Python dependencies are provided in the file [requirements.txt](./requirements.txt) .
+The collection of Jupyter Notebooks tutorials is seamlessly integrated into the Insula Code Lab Python environment for all users. Required Python dependencies are provided in the file [requirements.txt](./requirements.txt) .
 
-More expert users can create their own Python virtual environment following the instructions provided below.
+Users can create their own Python virtual environment following the instructions provided below.
 ### Create a virtual environment
 Open a Terminal window and create a virtual environment named `my_env`: 
 ```
@@ -31,13 +31,14 @@ Users can install Python dependencies via `pip` channel singularly or in a batch
 ```
 pip install -r requirements.txt
 ```
-> **Note**: Pre-installed Python requirements are frozen as of the latest release of Insula Code Lab, meaning package versions reflect a snapshot of dependencies currently running in the user environment.
+> **Note**: These Python requirements provide a snapshot of dependencies needed to run the example notebooks provided in this repository.
 
 Install the Jupyter kernel `my_env`:
 ```
 ipython kernel install --user --name=my_env
 ```
 > **Note**: Do not forget to change the kernel to `my_env` using the upper-right button within the Jupyter user interface every time you want to run your code.
+> Occasionally, a stop/start of the service is required to apply environment changes. Users can manage the server stop/start commands through the *File* dropdown menu.
 
 ## Contact
 If you have questions or need support with these examples, contact the support at https://platform.destine.eu/support.

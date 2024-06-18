@@ -1,6 +1,7 @@
 # DestinE Jupyter Notebook Tutorials for the Insula's Code Lab
 
-This set of Jupyter Notebook tutorials equips users with the skills to access and exploit Digital Twin data from DestinE for the Insula Code Lab. Examples are all written in Python.
+This set of Jupyter Notebook tutorials equips users with the skills to access and exploit Digital Twin data from DestinE for the Insula Code Lab. Examples are all written in Python. <br>
+Tutorials are seamlessly integrated into the Insula Code Lab Python environment for all users. 
 
 * [DestinE Platform CacheB data access](./cacheb/cacheb-climate-example.ipynb): this example supports the user in accessing the DESP Data CacheB Service and work with Climate Adaptation DT data.
 * [How to access LUMI's Extremes Digital Twin data using earthkit and the Polytope API](./polytope/polytope-earthkit.ipynb): this example supports the user to retrieve Weather Extremes DT data from Polytope and visualize it.
@@ -13,10 +14,17 @@ This set of Jupyter Notebook tutorials equips users with the skills to access an
 * `EDEN-example.ipynb` and `auth.py` original content created by MEEO (EDEN).
 
 ## Installation
-The collection of Jupyter Notebooks tutorials is seamlessly integrated into the Insula Code Lab Python environment for all users. Required Python dependencies are provided in the file [requirements.txt](./requirements.txt) .
+The CodeLab environment includes some Python packages pre-installed in the user's environment. The overall list of dependencies is provided in the file [requirements.txt](./requirements.txt).
+> **Note**: Pre-installed Python packages listed in this file provide a snapshot of dependencies needed to run the example notebooks provided in this repository.
 
-Users can create their own Python virtual environment following the instructions provided below.
-### Create a virtual environment
+The [destinelab](https://pypi.org/project/destinelab/) package requires a manual installation by the users, as follows:
+
+* Open a terminal window and type:
+```
+pip install destinelab
+```
+## How to create a virtual environment
+Users can always create their own Python virtual environment following the instructions provided below.<br>
 Open a Terminal window and create a virtual environment named `my_env`: 
 ```
 python -m venv /home/jovyan/my_env
@@ -26,13 +34,17 @@ Activate it:
 source /home/jovyan/my_env/bin/activate
 ```
 ### Install dependencies
-Users can install Python dependencies via `pip` channel singularly or in a batch by means of a `requirements.txt` file:
-
+Users can install Python dependencies in this environment as follows.<br>
+* Open a terminal window and install a single module singularly:
+```
+pip install <package>
+```
+Or install modules in batch by means of a requirements file:
+* Open a terminal window and type:
 ```
 pip install -r requirements.txt
 ```
-> **Note**: These Python requirements provide a snapshot of dependencies needed to run the example notebooks provided in this repository.
-
+### Install the kernel
 Install the Jupyter kernel `my_env`:
 ```
 ipython kernel install --user --name=my_env

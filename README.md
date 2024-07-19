@@ -6,6 +6,11 @@ Tutorials are seamlessly integrated into the Insula Code Lab Python environment 
 * [DestinE Platform CacheB data access](./cacheb/cacheb-climate-example.ipynb): this example supports the user in accessing the DESP Data CacheB Service and work with Climate Adaptation DT data.
 * [How to access LUMI's Extremes Digital Twin data using earthkit and the Polytope API](./polytope/polytope-earthkit.ipynb): this example supports the user to retrieve Weather Extremes DT data from Polytope and visualize it.
 * [How to discover and access data from DestinE Platform](./EDEN/EDEN-example.ipynb): this example supports the user in discover and access DestinE data through EDEN Service.
+* [DestinE Data Streaming](./DestineStreamer/era5.ipynb): this example supports the user in the discovery of DestinE data streams through the DestinE Streamer Service.
+
+#### ⚠️ Warning: Authorized Access Only
+The usage of Insula Code Lab and these example notebooks is reserved only to authorized DestinE user groups.<br>
+➡️ Register on the [Destination Earth Platform](https://auth.destine.eu/realms/desp/account)
 
 ## Credits
 

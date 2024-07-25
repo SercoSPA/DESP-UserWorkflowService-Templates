@@ -10,7 +10,7 @@ from typing import List, Dict
 import IPython
 
 resolutions = ['stream_2k', 'stream_4k', 'stream_full']
-API = 'https://dev.destinestreamer.geoville.com/api/streaming/data/'
+API = 'https://streamer.destine.eu/api/streaming/data/'
 STREAM_EP = 'metadata/{category_name}/{short_name}/{start_date}/{end_date}'
 OV_EP = 'overview/'
 
@@ -109,13 +109,13 @@ class DTEStreamer:
             # frame number
             self.frames_metadata = json.loads(response.content)['images']
 
-        except KeyError as e:
+        except KeyError:
             raise ConnectionError('Stream not found')
 
         if (self.stream_metadata is None or
                 len(self.stream_metadata) == 0
                 or self.frames_metadata is None):
-            raise SystemExit('Stream not found')
+            raise SystemExit('No data found')
 
         self.frame_count = len(self.frames_metadata)
         self.start_frame = self.frames_metadata[0]['img_number'] - 1
@@ -154,7 +154,7 @@ class DTEStreamer:
         # else:
         #     return
         if err.find('403') != -1:
-            raise ConnectionError(f"Can't open stream: 403 Access denied")
+            raise ConnectionError("Can't open stream: 403 Access denied")
         else:
             return
 
@@ -401,5 +401,5 @@ def table_row(short_name: str,
     tr += f'<td style="text-align:left;">{st_st}{compr}{st_en}</td>'
     tr += f'<td style="text-align:left;">{st_st}{ssim}{st_en}</td>'
     tr += f'<td style="text-align:left;">{st_st}{mre}{st_en}</td>'
-    tr += f'</tr>'
+    tr += '</tr>'
     return tr

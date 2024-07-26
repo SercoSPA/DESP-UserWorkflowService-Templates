@@ -56,7 +56,7 @@ class DTEStreamer:
                  short_name: str,
                  start_date: datetime,
                  end_date: datetime,
-                 token_loc: str):
+                 token: str):
 
         self.category_name: str = category_name
         self.__short_name: str = short_name
@@ -68,7 +68,7 @@ class DTEStreamer:
         self.frame_count: int = -1
         self.start_frame: int = -1
 
-        self.token = BearerAuth.extract_token(token_loc)
+        self.token = BearerAuth.extract_token(token)
 
         self.__get_stream_and_metadata()
 
@@ -338,7 +338,7 @@ class DTEStreamer:
                            np.linspace(start=-90, stop=90, num=self.ny()))
 
 
-def get_stream_overview(token_loc: str) -> IPython.display.TextDisplayObject:
+def get_stream_overview(token: str) -> IPython.display.TextDisplayObject:
     """
     This method fetches metadata for available data streams from the DTE API.
     The data is return as a table to overview accessible data.
@@ -346,7 +346,6 @@ def get_stream_overview(token_loc: str) -> IPython.display.TextDisplayObject:
     :return: - overview_table (IPython.display.TextDisplayObject)
     """
     try:
-        token = BearerAuth.extract_token(token_loc)
 
         url = API + OV_EP
         response = requests.get(url=url, auth=BearerAuth(token))

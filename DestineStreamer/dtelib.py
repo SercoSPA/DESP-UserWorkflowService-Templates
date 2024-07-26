@@ -6,10 +6,13 @@ import json
 import subprocess as sp
 import gc
 import psutil
+from typing import List, Dict
+import IPython
 
 resolutions = ['stream_2k', 'stream_4k', 'stream_full']
-ENDPOINT = 'https://dev.destinestreamer.geoville.com/api/streaming/metadata'
-DATA_API = '/data/{short_name}/{start_date}/{end_date}'
+API = 'https://streamer.destine.eu/api/streaming/data/'
+STREAM_EP = 'metadata/{category_name}/{short_name}/{start_date}/{end_date}'
+OV_EP = 'overview/'
 
 API_DT_FORMAT = '%Y%m%dT%H%M'
 FPS = 25
@@ -24,32 +27,8 @@ class BearerAuth(auth.AuthBase):
         r.headers["authorization"] = "Bearer " + self.token
         return r
 
-
-class DTEStreamer:
-
-    def __init__(self,
-                 category_name: str,
-                 short_name: str,
-                 start_date: datetime,
-                 end_date: datetime,
-                 token_loc: str):
-
-        self.category_name: str = category_name
-        self.__short_name: str = short_name
-        self.start_date: datetime = start_date
-        self.end_date: datetime = end_date
-        self.image_gen = None
-        self.stream_metadata: dict = dict()
-        self.frames_metadata: dict = dict()
-        self.frame_count: int = -1
-        self.start_frame: int = -1
-
-        self.token = self.__extract_token(token_loc)
-
-        self.__get_stream_and_metadata()
-
     @staticmethod
-    def __extract_token(token_path: str):
+    def extract_token(token_path: str):
         """
         This method extracts the HTTPS Bearer Token from the file specified in
         token_path. It is used to communicate
@@ -69,6 +48,31 @@ class DTEStreamer:
         token = json.loads(token_json)['user_key']
         return token
 
+
+class DTEStreamer:
+
+    def __init__(self,
+                 category_name: str,
+                 short_name: str,
+                 start_date: datetime,
+                 end_date: datetime,
+                 token: str):
+
+        self.category_name: str = category_name
+        self.__short_name: str = short_name
+        self.start_date: datetime = start_date
+        self.end_date: datetime = end_date
+        self.image_gen = None
+        self.stream_metadata: dict = dict()
+        self.frames_metadata: dict = dict()
+        self.frame_count: int = -1
+        self.start_frame: int = -1
+
+        self.token = BearerAuth.extract_token(token)
+
+        self.__get_stream_and_metadata()
+
+
     def __get_stream_and_metadata(self):
         """
         This method fetches metadata and the path to the stream from the DTE API
@@ -83,11 +87,11 @@ class DTEStreamer:
             api_start_date = self.start_date.strftime(API_DT_FORMAT)
             api_end_date = self.end_date.strftime(API_DT_FORMAT)
 
-            url = ENDPOINT + \
-                DATA_API.format(short_name=self.__short_name,
-                                start_date=api_start_date,
-                                end_date=api_end_date)
-
+            url = API + \
+                  STREAM_EP.format(category_name=self.category_name,
+                                   short_name=self.__short_name,
+                                   start_date=api_start_date,
+                                   end_date=api_end_date)
             response = requests.get(url=url, auth=BearerAuth(self.token))
             content = json.loads(response.content)
 
@@ -105,13 +109,13 @@ class DTEStreamer:
             # frame number
             self.frames_metadata = json.loads(response.content)['images']
 
-        except KeyError as e:
+        except KeyError:
             raise ConnectionError('Stream not found')
 
         if (self.stream_metadata is None or
                 len(self.stream_metadata) == 0
                 or self.frames_metadata is None):
-            raise SystemExit('Stream not found')
+            raise SystemExit('No data found')
 
         self.frame_count = len(self.frames_metadata)
         self.start_frame = self.frames_metadata[0]['img_number'] - 1
@@ -128,7 +132,7 @@ class DTEStreamer:
         :return None:
         """
 
-        stderr_content = stderr_stream.read()
+        stderr_content = stderr_stream.read(1000)
         stderr_stream.close()
 
         if stderr_content is None:
@@ -150,7 +154,7 @@ class DTEStreamer:
         # else:
         #     return
         if err.find('403') != -1:
-            raise ConnectionError(f"Can't open stream: 403 Access denied")
+            raise ConnectionError("Can't open stream: 403 Access denied")
         else:
             return
 
@@ -267,10 +271,10 @@ class DTEStreamer:
 
         :return: - rescaled_image (nd.array)
         """
-        difference = np.subtract(img_max_value, img_min_value)
-        product = np.multiply(image, difference)
-        sum = np.add(product, img_min_value)
-        return sum
+        span = np.subtract(img_max_value, img_min_value)
+        rescale = np.multiply(image, span)
+        shift = np.add(rescale, img_min_value)
+        return shift
 
     def unit(self):
         """
@@ -332,3 +336,69 @@ class DTEStreamer:
         """
         return np.meshgrid(np.linspace(start=0, stop=359.75, num=self.nx()),
                            np.linspace(start=-90, stop=90, num=self.ny()))
+
+
+def get_stream_overview(token: str) -> IPython.display.TextDisplayObject:
+    """
+    This method fetches metadata for available data streams from the DTE API.
+    The data is return as a table to overview accessible data.
+
+    :return: - overview_table (IPython.display.TextDisplayObject)
+    """
+    try:
+
+        url = API + OV_EP
+        response = requests.get(url=url, auth=BearerAuth(token))
+        response_content = json.loads(response.content)
+
+        if response.status_code != 200:
+            raise Exception(response_content)
+
+        ov_table = ''
+
+        for category_name, category_contents in response_content.items():
+            ov_table += f'<h4>Category: <b>{category_name}</b></h4>'
+            ov_table += '<table >'
+            ov_table += table_row(short_name='short_name',
+                                  title='title',
+                                  period='period',
+                                  compr='compression rate',
+                                  ssim='SSIM',
+                                  mre='mean relative error',
+                                  st_st='<b style="align:left">',
+                                  st_en='</b>')
+
+            for category_content in category_contents:
+                new_tr = table_row(short_name=category_content['short_name'],
+                                   title=category_content['title'],
+                                   period=category_content['period'],
+                                   compr=category_content['compression_ratio'],
+                                   ssim=category_content['ssim'],
+                                   mre=category_content['mre'])
+                ov_table += new_tr
+
+            ov_table += '</table>'
+        return IPython.display.HTML(ov_table)
+
+    except KeyError:
+        raise ConnectionError('Stream not found')
+
+
+def table_row(short_name: str,
+              title: str,
+              period: str,
+              compr: str,
+              ssim: str,
+              mre: str,
+              st_st: str = '',
+              st_en: str = ''):
+
+    tr = '<tr>'
+    tr += f'<td style="text-align:left;">{st_st}{short_name}{st_en}</td>'
+    tr += f'<td style="text-align:left;">{st_st}{title}{st_en}</td>'
+    tr += f'<td style="text-align:left;">{st_st}{period}{st_en}</td>'
+    tr += f'<td style="text-align:left;">{st_st}{compr}{st_en}</td>'
+    tr += f'<td style="text-align:left;">{st_st}{ssim}{st_en}</td>'
+    tr += f'<td style="text-align:left;">{st_st}{mre}{st_en}</td>'
+    tr += '</tr>'
+    return tr

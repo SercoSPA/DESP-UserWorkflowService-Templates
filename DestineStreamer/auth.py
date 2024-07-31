@@ -30,8 +30,6 @@ class Settings(BaseSettings):
 
     KEYCLOAK_REDIRECT_URL: str = "https://streamer.destine.eu/api/v1/authentication/callback"
     KEYCLOAK_CLIENTID: str = "streaming-fe"
-    #KEYCLOAK_REDIRECT_URL: str = "https://broker.eden.destine.eu/api/v1/authentication/callback"
-    #KEYCLOAK_CLIENTID: str = "hda-broker-public"
 
 
     KEYCLOAK_USERNAME: str = username

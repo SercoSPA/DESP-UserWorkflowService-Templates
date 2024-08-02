@@ -27,27 +27,6 @@ class BearerAuth(auth.AuthBase):
         r.headers["authorization"] = "Bearer " + self.token
         return r
 
-    @staticmethod
-    def extract_token(token_path: str):
-        """
-        This method extracts the HTTPS Bearer Token from the file specified in
-        token_path. It is used to communicate
-        with the DTE API.
-
-        :param token_path:
-        :type token_path: str
-
-        :return token - (str):
-        """
-        token_path = token_path[token_path.find('/'):]
-        f = open(token_path)
-
-        token_json = f.readline()
-        f.close()
-
-        token = json.loads(token_json)['user_key']
-        return token
-
 
 class DTEStreamer:
 
@@ -68,7 +47,7 @@ class DTEStreamer:
         self.frame_count: int = -1
         self.start_frame: int = -1
 
-        self.token = BearerAuth.extract_token(token)
+        self.token = token
 
         self.__get_stream_and_metadata()
 

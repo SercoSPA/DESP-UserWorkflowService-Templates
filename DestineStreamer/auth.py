@@ -17,7 +17,7 @@ print(CURRENT_DIR)
 SCRIPTS_DIR = os.path.dirname(CURRENT_DIR)
 PREFIX = os.path.dirname(SCRIPTS_DIR)
 #username = input('Type your username : ')
-username = getpass.getpass('Type your username : ')
+username = input('Type your username : ')
 
 #password = input('Type your password :')
 password = getpass.getpass('Type your password : ')

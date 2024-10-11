@@ -2,6 +2,7 @@
 
 from typing import Annotated
 from urllib.parse import parse_qs, urlparse
+import sys
 
 import requests
 from conflator import CLIArg, ConfigModel, Conflator, EnvVar
@@ -58,7 +59,7 @@ else:
     password = config.password
 
 
-print(f"# Authenticating on {config.iam_url} with user {user}")
+print(f"Authenticating on {config.iam_url} with user {user}", file=sys.stderr)
 
 with requests.Session() as s:
 

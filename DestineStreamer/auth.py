@@ -16,12 +16,9 @@ CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 print(CURRENT_DIR)
 SCRIPTS_DIR = os.path.dirname(CURRENT_DIR)
 PREFIX = os.path.dirname(SCRIPTS_DIR)
-#username = input('Type your username : ')
-username = input('Type your username : ')
 
-#password = input('Type your password :')
-password = getpass.getpass('Type your password : ')
-
+username = input('Type your username: ')
+password = getpass.getpass('Type your password: ')
 
 class Settings(BaseSettings):
     #AUTH
@@ -30,7 +27,6 @@ class Settings(BaseSettings):
 
     KEYCLOAK_REDIRECT_URL: str = "https://streamer.destine.eu/api/v1/authentication/callback"
     KEYCLOAK_CLIENTID: str = "streaming-fe"
-
 
     KEYCLOAK_USERNAME: str = username
     KEYCLOAK_PASSWORD: str = password
@@ -81,6 +77,7 @@ class Auth():
                 data=data
             ).json()
             access_token = tokens['access_token']
+            refresh_token = tokens['refresh_token']
 
             decoded_access_token = jwt.decode(
                 access_token,
@@ -89,7 +86,7 @@ class Auth():
             )
         except Exception as e:
             raise RuntimeError("Token request Failed")
-        return access_token, decoded_access_token
+        return access_token, decoded_access_token, refresh_token
 
     def getKey(self, access_token:str):
         json_certs = requests.get(s.KEYCLOAK_JWKS_URL).json().get("keys")
@@ -165,7 +162,7 @@ if __name__ == "__main__":
     s.KEYCLOAK_AUTH = openid_configuration["authorization_endpoint"]
     s.KEYCLOAK_TOKEN = openid_configuration["token_endpoint"]
 
-    access_token, decoded_access_token = Auth().get_token()
+    access_token, decoded_access_token, refresh_token = Auth().get_token()
 
-    print(json.dumps(decoded_access_token, indent=2))
+    print(refresh_token)
     print(access_token)

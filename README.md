@@ -15,6 +15,7 @@ The usage of Insula Code Lab and these example notebooks is reserved only to aut
 ## Credits
 
 * `cacheb-climate-example.ipynb` and `cacheb-authentication` original content created by B-Open (Earth Data Hub). 
+* [Earth Data Hub](https://earthdatahub.com) (edh) tutorials created by [B-Open](https://www.bopen.eu). 
 * `polytope-earthkit.ipynb` and `desp-authentication.py` are a slightly modified version of the examples available at [Destination Earth Digital Twins's polytope examples](https://github.com/destination-earth-digital-twins/polytope-examples/) by ECMWF.
 * `EDEN-example.ipynb` and `auth.py` original content created by MEEO (EDEN).
 * `era5.ipynb` and related contents in the *DestineStreamer* directory have been created by GeoVille (DestinE Streamer).

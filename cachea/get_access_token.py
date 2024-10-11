@@ -2,7 +2,6 @@
 
 from typing import Annotated
 from urllib.parse import parse_qs, urlparse
-import sys
 
 import requests
 from conflator import CLIArg, ConfigModel, Conflator, EnvVar
@@ -10,7 +9,7 @@ from lxml import html
 from pydantic import Field
 import getpass
 
-SERVICE_URL = "https://cacheb.dcms.destine.eu/"
+SERVICE_URL = "http://localhost:5000"
 
 
 class Config(ConfigModel):
@@ -43,23 +42,21 @@ class Config(ConfigModel):
         Field(description="The client ID of the IAM server"),
         CLIArg("--iam-client"),
         EnvVar("CLIENT_ID"),
-    ] = "edh-public"
+    ] = "dcms_client"
 
 
 config = Conflator("despauth", Config).load()
 
 if config.user is None:
-    user = input("Username: ")
+    user = getpass.getpass('Type your username : ')
 else:
     user = config.user
 
 if config.password is None:
-    password = getpass.getpass("Password: ")
+    password = getpass.getpass("Type your password: ")
 else:
     password = config.password
 
-
-print(f"Authenticating on {config.iam_url} with user {user}", file=sys.stderr)
 
 with requests.Session() as s:
 
@@ -72,7 +69,7 @@ with requests.Session() as s:
         params={
             "client_id": config.iam_client,
             "redirect_uri": SERVICE_URL,
-            "scope": "openid offline_access",
+            "scope": "openid",
             "response_type": "code",
         },
     )
@@ -126,10 +123,4 @@ with requests.Session() as s:
     # instead of storing the access token, we store the offline_access (kind of "refresh") token
     token = response.json()["refresh_token"]
 
-    print(
-        f"""
-machine cacheb.dcms.destine.eu
-    login anonymous
-    password {token}
-"""
-    )
+    print(token)

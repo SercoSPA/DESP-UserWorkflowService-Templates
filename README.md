@@ -20,7 +20,7 @@ The usage of Insula Code Lab and these example notebooks is reserved only to aut
 * `polytope-earthkit.ipynb` and `desp-authentication.py` are a slightly modified version of the examples available at [Destination Earth Digital Twins's polytope examples](https://github.com/destination-earth-digital-twins/polytope-examples/) by ECMWF.
 * `EDEN-example.ipynb` and `auth.py` original content created by MEEO (EDEN).
 * `era5.ipynb` and related contents in the *DestineStreamer* directory have been created by GeoVille (DestinE Streamer).
-* `Drought_assessment.ipynb` and related contents in the *Insula* directory have been created by CGI (Insula).
+* `Drought_assessment.ipynb` and related contents in the *Insula* directory have been created by [Bea07](https://github.com/Bea07) from CGI (Insula).
 
 ## Installation
 The CodeLab environment includes some Python packages pre-installed in the user's environment. The overall list of dependencies is provided in the file [requirements.txt](./requirements.txt).

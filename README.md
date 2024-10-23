@@ -7,6 +7,7 @@ Tutorials are seamlessly integrated into the Insula Code Lab Python environment 
 * [How to access LUMI's Extremes Digital Twin data using earthkit and the Polytope API](./polytope/polytope-earthkit.ipynb): this example supports the user to retrieve Weather Extremes DT data from Polytope and visualize it.
 * [How to discover and access data from DestinE Platform](./EDEN/EDEN-example.ipynb): this example supports the user in discover and access DestinE data through EDEN Service.
 * [DestinE Data Streaming](./DestineStreamer/era5.ipynb): this example supports the user in the discovery of DestinE data streams through the DestinE Streamer Service.
+* [Drought Assessment using Insula](./Insula/Drought_assessment.ipynb): this example demonstrates how to use Insula Code on DestinE through the "Standard Evapotranspiration (preview)" service outputs.
 
 #### ⚠️ Warning: Authorized Access Only
 The usage of Insula Code Lab and these example notebooks is reserved only to authorized DestinE user groups.<br>
@@ -19,6 +20,7 @@ The usage of Insula Code Lab and these example notebooks is reserved only to aut
 * `polytope-earthkit.ipynb` and `desp-authentication.py` are a slightly modified version of the examples available at [Destination Earth Digital Twins's polytope examples](https://github.com/destination-earth-digital-twins/polytope-examples/) by ECMWF.
 * `EDEN-example.ipynb` and `auth.py` original content created by MEEO (EDEN).
 * `era5.ipynb` and related contents in the *DestineStreamer* directory have been created by GeoVille (DestinE Streamer).
+* `Drought_assessment.ipynb` and related contents in the *Insula* directory have been created by CGI (Insula).
 
 ## Installation
 The CodeLab environment includes some Python packages pre-installed in the user's environment. The overall list of dependencies is provided in the file [requirements.txt](./requirements.txt).

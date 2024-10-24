@@ -3,6 +3,12 @@
 This set of Jupyter Notebook tutorials equips users with the skills to access and exploit Digital Twin data from DestinE for the Insula Code Lab. Examples are all written in Python. <br>
 Tutorials are seamlessly integrated into the Insula Code Lab Python environment for all users. 
 
+* [DestinE Platform CacheB data access](./cacheb/cacheb-climate-example.ipynb): this example supports the user in accessing the DESP Data CacheB Service and work with Climate Adaptation DT data.
+* [How to access LUMI's Extremes Digital Twin data using earthkit and the Polytope API](./polytope/polytope-earthkit.ipynb): this example supports the user to retrieve Weather Extremes DT data from Polytope and visualize it.
+* [How to discover and access data from DestinE Platform](./EDEN/EDEN-example.ipynb): this example supports the user in discover and access DestinE data through EDEN Service.
+* [DestinE Data Streaming](./DestineStreamer/era5.ipynb): this example supports the user in the discovery of DestinE data streams through the DestinE Streamer Service.
+* [Drought Assessment using Insula](./Insula/Drought_assessment.ipynb): this example demonstrates how to use Insula Code on DestinE through the "Standard Evapotranspiration (preview)" service outputs.
+
 Notebook templates are all a quickstart to DestinE Platform services, including EDEN, Earth Data Hub, the Data Cache Services (Cache-A and Cache-B), DestinE Streamer, DEA, Polytope, HDA, and more! Stay tuned for more contents and feel free to contribute!
 
 #### ⚠️ Warning: Authorized Access Only
@@ -17,6 +23,7 @@ The usage of Insula Code Lab and these example notebooks is reserved only to aut
 * EDEN notebooks original content created by MEEO (EDEN).
 * DestineStreamer original contents created by GeoVille (DestinE Streamer)
 * DEA and Cache-A original contents created by [Alia Space Systems](https://www.alia-space.com/)
+* Insula original contents created by [Bea07](https://github.com/Bea07) from [CGI](https://cgi.com)
 
 ## Installation
 The CodeLab environment includes some Python packages pre-installed in the user's environment. The overall list of dependencies is provided in the file [requirements.txt](./requirements.txt).

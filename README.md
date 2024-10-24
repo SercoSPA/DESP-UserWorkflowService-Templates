@@ -9,18 +9,21 @@ Tutorials are seamlessly integrated into the Insula Code Lab Python environment 
 * [DestinE Data Streaming](./DestineStreamer/era5.ipynb): this example supports the user in the discovery of DestinE data streams through the DestinE Streamer Service.
 * [Drought Assessment using Insula](./Insula/Drought_assessment.ipynb): this example demonstrates how to use Insula Code on DestinE through the "Standard Evapotranspiration (preview)" service outputs.
 
+Notebook templates are all a quickstart to DestinE Platform services, including EDEN, Earth Data Hub, the Data Cache Services (Cache-A and Cache-B), DestinE Streamer, DEA, Polytope, HDA, and more! Stay tuned for more contents and feel free to contribute!
+
 #### ⚠️ Warning: Authorized Access Only
 The usage of Insula Code Lab and these example notebooks is reserved only to authorized DestinE user groups.<br>
 ➡️ Register on the [Destination Earth Platform](https://auth.destine.eu/realms/desp/account)
 
 ## Credits
 
-* `cacheb-climate-example.ipynb` and `cacheb-authentication` original content created by B-Open (Earth Data Hub). 
-* [Earth Data Hub](https://earthdatahub.com) (edh) tutorials created by [B-Open](https://www.bopen.eu). 
+* Cache-B notebooks original content created by B-Open (Earth Data Hub). 
+* [Earth Data Hub](https://earthdatahub.com) tutorials created by [B-Open](https://www.bopen.eu). 
 * `polytope-earthkit.ipynb` and `desp-authentication.py` are a slightly modified version of the examples available at [Destination Earth Digital Twins's polytope examples](https://github.com/destination-earth-digital-twins/polytope-examples/) by ECMWF.
-* `EDEN-example.ipynb` and `auth.py` original content created by MEEO (EDEN).
-* `era5.ipynb` and related contents in the *DestineStreamer* directory have been created by GeoVille (DestinE Streamer).
-* `Drought_assessment.ipynb` and related contents in the *Insula* directory have been created by [Bea07](https://github.com/Bea07) from CGI (Insula).
+* EDEN notebooks original content created by MEEO (EDEN).
+* DestineStreamer original contents created by GeoVille (DestinE Streamer)
+* DEA and Cache-A original contents created by [Alia Space Systems](https://www.alia-space.com/)
+* Insula original contents created by [Bea07](https://github.com/Bea07) from [CGI](https://cgi.com)
 
 ## Installation
 The CodeLab environment includes some Python packages pre-installed in the user's environment. The overall list of dependencies is provided in the file [requirements.txt](./requirements.txt).

@@ -7,10 +7,9 @@ import json
 import subprocess as sp
 from numba import njit
 import IPython
-import time
 
 API = 'https://streamer.destine.eu/api/streaming/data/'
-STREAM_EP = 'metadata/{category_name}/{short_name}/{start_date}/{end_date}'
+STREAM_EP = 'metadata/{program_subset}/{variable}/{start_date}/{end_date}'
 OV_EP = 'overview/'
 
 API_DT_FORMAT = '%Y%m%dT%H%M'
@@ -38,15 +37,15 @@ def make_image(buffer: bytes, img_min_value: float, img_max_value: float, ny: in
 class DTEStreamer:
 
     def __init__(self,
-                 category_name: str,
-                 short_name: str,
+                 program_subset: str,
+                 variable: str,
                  start_date: datetime,
                  end_date: datetime,
 
                  token: str):
 
-        self.category_name: str = category_name
-        self.__short_name: str = short_name
+        self.program_subset: str = program_subset
+        self.__variable: str = variable
         self.start_date: datetime = start_date
         self.end_date: datetime = end_date
         self.__stream_metadata: dict = dict()
@@ -59,12 +58,10 @@ class DTEStreamer:
 
         self.token = token
 
-        timestamp = time.time()
         self.__get_stream_and_metadata()
         self.__bufsize = int(self.nx() * self.ny() * 2)
-        # seek to first data frame in the selected time span
 
-        timestamp = time.time()
+        # seek to first data frame in the selected time span
         self.__seek_to_frame(self.__frames_metadata[0]['img_number']-1)
 
     def __get_stream_and_metadata(self):
@@ -82,8 +79,8 @@ class DTEStreamer:
             api_end_date = self.end_date.strftime(API_DT_FORMAT)
 
             url = API + \
-                STREAM_EP.format(category_name=self.category_name,
-                                 short_name=self.__short_name,
+                STREAM_EP.format(program_subset=self.program_subset,
+                                 variable=self.__variable,
                                  start_date=api_start_date,
                                  end_date=api_end_date)
             response = requests.get(url=url, auth=BearerAuth(self.token))
@@ -210,13 +207,6 @@ class DTEStreamer:
         command = ['ffmpeg', '-hide_banner',
                    '-ss', f'{self.__cur_frame_number / FPS:.2f}',
                    '-i', self.__stream_metadata['stream_path'],
-                   # '-map', '0:v',
-                   # '-c:v', 'copy',
-                   # '-bsf:v', 'hevc_mp4toannexb',
-                   # '-vsync', 'passthrough',
-                   # '-framerate', '250'
-                   # to doesnt work apparently
-                   # '-to', f'{(self.__start_img_number - 1) + self.__frame_count / FPS:.2f}',
                    '-t', f'{(self.__frame_count-(self.__cur_frame_number - (self.__start_img_number - 1))) / FPS:.2f}',
                    '-f', 'rawvideo',
                    'pipe:1']
@@ -282,14 +272,14 @@ class DTEStreamer:
         """
         return self.__stream_metadata['parameter_name']
 
-    def short_name(self):
+    def variable(self):
         """
         This method returns an abbreviated name of the data represented in the
         stream.
 
-        :return: - short_name (str)
+        :return: - variable (str)
         """
-        return self.__stream_metadata['parameter_short_name']
+        return self.__stream_metadata['parameter_variable']
 
     def type_of_level(self):
         """
@@ -354,10 +344,10 @@ def get_stream_overview(token: str) -> IPython.display.TextDisplayObject:
 
         ov_table = ''
 
-        for category_name, category_contents in response_content.items():
-            ov_table += f'<h4>Category: <b>{category_name}</b></h4>'
+        for subset_name, subset_contents in response_content.items():
+            ov_table += f'<h4>Program Subset: <b>{subset_name}</b></h4>'
             ov_table += '<table >'
-            ov_table += table_row(short_name='short_name',
+            ov_table += table_row(variable='variable',
                                   title='title',
                                   period='period',
                                   compr='compression rate',
@@ -366,13 +356,13 @@ def get_stream_overview(token: str) -> IPython.display.TextDisplayObject:
                                   st_st='<b style="align:left">',
                                   st_en='</b>')
 
-            for category_content in category_contents:
-                new_tr = table_row(short_name=category_content['short_name'],
-                                   title=category_content['title'],
-                                   period=category_content['period'],
-                                   compr=category_content['compression_ratio'],
-                                   ssim=category_content['ssim'],
-                                   mre=category_content['mre'])
+            for subset_content in subset_contents:
+                new_tr = table_row(variable=subset_content['short_name'],
+                                   title=subset_content['title'],
+                                   period=subset_content['period'],
+                                   compr=subset_content['compression_ratio'],
+                                   ssim=subset_content['ssim'],
+                                   mre=subset_content['mre'])
                 ov_table += new_tr
 
             ov_table += '</table>'
@@ -382,7 +372,7 @@ def get_stream_overview(token: str) -> IPython.display.TextDisplayObject:
         raise ConnectionError('Stream not found')
 
 
-def table_row(short_name: str,
+def table_row(variable: str,
               title: str,
               period: str,
               compr: str,
@@ -392,7 +382,7 @@ def table_row(short_name: str,
               st_en: str = ''):
 
     tr = '<tr>'
-    tr += f'<td style="text-align:left;">{st_st}{short_name}{st_en}</td>'
+    tr += f'<td style="text-align:left;">{st_st}{variable}{st_en}</td>'
     tr += f'<td style="text-align:left;">{st_st}{title}{st_en}</td>'
     tr += f'<td style="text-align:left;">{st_st}{period}{st_en}</td>'
     tr += f'<td style="text-align:left;">{st_st}{compr}{st_en}</td>'

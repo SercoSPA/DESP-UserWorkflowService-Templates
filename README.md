@@ -1,29 +1,38 @@
 # DestinE Jupyter Notebook Tutorials for the Insula's Code Lab
 
-This set of Jupyter Notebook tutorials equips users with the skills to access and exploit Digital Twin data from DestinE for the Insula Code Lab. Examples are all written in Python. <br>
-Tutorials are seamlessly integrated into the Insula Code Lab Python environment for all users. 
+Welcome to the repository for DestinE Platform Jupyter Notebook Tutorials!
 
-* [DestinE Platform CacheB data access](./cacheb/cacheb-climate-example.ipynb): this example supports the user in accessing the DESP Data CacheB Service and work with Climate Adaptation DT data.
-* [How to access LUMI's Extremes Digital Twin data using earthkit and the Polytope API](./polytope/polytope-earthkit.ipynb): this example supports the user to retrieve Weather Extremes DT data from Polytope and visualize it.
-* [How to discover and access data from DestinE Platform](./EDEN/EDEN-example.ipynb): this example supports the user in discover and access DestinE data through EDEN Service.
-* [DestinE Data Streaming](./DestineStreamer/era5.ipynb): this example supports the user in the discovery of DestinE data streams through the DestinE Streamer Service.
-* [Drought Assessment using Insula](./Insula/Drought_assessment.ipynb): this example demonstrates how to use Insula Code on DestinE through the "Standard Evapotranspiration (preview)" service outputs.
+This repository is designed to guide users through the [DestinE Platform Services](https://platform.destine.eu/services/), exploiting DestinE Digital Twin data as well as data from many other data sources within the [Insula Code Lab Service](https://platform.destine.eu/services/service/insula-code/) interactive Jupyter environment.
 
-Notebook templates are all a quickstart to DestinE Platform services, including EDEN, Earth Data Hub, the Data Cache Services (Cache-A and Cache-B), DestinE Streamer, DEA, Polytope, HDA, and more! Stay tuned for more contents and feel free to contribute!
+➡️ [Register](https://auth.destine.eu/realms/desp/account) on the Destination Earth Platform  and start using Jupyter Notebooks on [Insula Code Lab](https://code.insula.destine.eu)! Example notebooks are seamlessly integrated into the default Python environment for all registered users.
 
-#### ⚠️ Warning: Authorized Access Only
-The usage of Insula Code Lab and these example notebooks is reserved only to authorized DestinE user groups.<br>
-➡️ Register on the [Destination Earth Platform](https://auth.destine.eu/realms/desp/account)
+⚠️ To start exploiting DestinE Digital Twin data please make sure to request the *upgraded access* permission by visiting [this link](https://platform.destine.eu/access-policy-upgrade/).
+
+## Jupyter Notebooks Examples
+
+All examples are written in Python and are designed to work seamlessly with any DestinE Platform Data Access service.
+
+* Access DestinE Climate Adaptation Digital Twin data on the [cacheb](./cacheb/cacheb-quickstart.ipynb) ➡️ *upgraded access* required.
+* Access DestinE Climate Adaptation and Weather Extremes Digital Twin [data from Polytope](./polytope/polytope-earthkit.ipynb) and visualize it ➡️ *upgraded access* required.
+* Discover DestinE Climate Adaptation Digital Twin [Data Streams](./DestineStreamer) on DestinEStreamer ➡️ *upgraded access* required.
+* Discover and access Copernicus ERA5 data with [Earth Data Hub](./EarthDataHub) Service examples.
+* Access data on the [Data Lake via EDEN](./EDEN/EDEN-example.ipynb) Service example. 
+* Compute the `Standard Evapotranspiration` variable from ERA5 data using the [Drought Assessment](./Insula/Drought_assessment.ipynb) example.
+* Search and download Copernicus Sentinels data via STAC on the [cachea](./cachea/search_and_download.ipynb) example.
+* Create a [DEA](https://dea.destine.eu/web/) data story on Jupyter Notebook using [dea](./dea/create-asset/create-asset.ipynb) Service example.
+
+Notebook templates are all a quickstart to DestinE Platform services, including also ECMWF's Polytope and EUMETSAT's HDA.
+
+Stay tuned for more contents and feel free to contribute!
 
 ## Credits
 
-* Cache-B notebooks original content created by B-Open (Earth Data Hub). 
-* [Earth Data Hub](https://earthdatahub.com) tutorials created by [B-Open](https://www.bopen.eu). 
-* `polytope-earthkit.ipynb` and `desp-authentication.py` are a slightly modified version of the examples available at [Destination Earth Digital Twins's polytope examples](https://github.com/destination-earth-digital-twins/polytope-examples/) by ECMWF.
-* EDEN notebooks original content created by MEEO (EDEN).
-* DestineStreamer original contents created by GeoVille (DestinE Streamer)
-* DEA and Cache-A original contents created by [Alia Space Systems](https://www.alia-space.com/)
-* Insula original contents created by [Bea07](https://github.com/Bea07) from [CGI](https://cgi.com)
+* [Earth Data Hub](https://earthdatahub.com) tutorials and Cache-B original content created by [nicolamasotti](https://github.com/nicolamasotti) from [B-Open](https://www.bopen.eu). 
+* [EDEN](https://finder.eden.destine.eu/) notebooks original content created by [MEEO](https://www.meeo.it/).
+* [DestineStreamer](https://streamer.destine.eu/) examples created by [SamCarraro](https://github.com/SamCarraro) from [GeoVille](https://www.geoville.com/).
+* [DEA](https://dea.destine.eu/web/) and Cache-A tutorials created by [Alia Space Systems](https://www.alia-space.com/).
+* [Insula](https://insula.destine.eu/) contributions by [Bea07](https://github.com/Bea07) from [CGI](https://cgi.com).
+* Polytope example is a slightly modified version of the examples available at ECMWF's [Destination Earth Digital Twins's polytope examples](https://github.com/destination-earth-digital-twins/polytope-examples/).
 
 ## Installation
 The CodeLab environment includes some Python packages pre-installed in the user's environment. The overall list of dependencies is provided in the file [requirements.txt](./requirements.txt).
@@ -60,4 +69,4 @@ ipython kernel install --user --name=my_env
 > Occasionally, a stop/start of the service is required to apply environment changes. Users can manage the server stop/start commands via the *File* dropdown menu under *Hub Control Panel*.
 
 ## Contact
-If you have questions or need support with these examples, contact the support at https://platform.destine.eu/support.
+If you have questions or need support with these examples contact the ➡️ [DestinE support](https://platform.destine.eu/support).

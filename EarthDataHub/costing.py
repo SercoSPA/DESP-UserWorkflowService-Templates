@@ -3,7 +3,8 @@ import math
 
 def estimate_download_size(source_dataarray, dataarray_selection):
     """
-    Estimate the download size and the memory size of a subset of a DataArray when downloaded from Earth Data Hub.
+    Estimate the download size of a DataArray subset when downloaded from Earth Data Hub. Only works when
+    the subset is continuous.
 
     Parameters:
     ----------
@@ -51,7 +52,8 @@ def estimate_download_size(source_dataarray, dataarray_selection):
     estimated_download_fields = math.prod(estimated_download_shape[key] for key in estimated_download_shape)
     # print('estimated_download_fields : ', estimated_download_fields)
 
-    estimated_dowload_size = int(str(dataarray_selection.dtype)[-2:])//8*estimated_download_fields
     print(f'estimated_needed_chunks: {math.prod([val for val in needed_chunks_count_by_dim.values()])}')
-    print(f'estimated_memory_size: {round(estimated_dowload_size/1000**3, 3):,} GB')
-    print(f'estimated_download_size: {round(estimated_dowload_size/1000**3/10, 3):,} GB')
+
+    raw_download_size = int(str(dataarray_selection.dtype)[-2:])//8*estimated_download_fields
+    compressed_download_size = raw_download_size/10
+    print(f'estimated_download_size: {round(compressed_download_size/1024**3, 3):,} GiB ({round(compressed_download_size/1024**2, 0)} MiB)')

@@ -15,7 +15,8 @@ All examples are written in Python and are designed to work seamlessly with any 
 * Access DestinE Climate Adaptation Digital Twin data on the [cacheb](./cacheb/cacheb-quickstart.ipynb) ➡️ *upgraded access* required.
 * Discover DestinE Climate Adaptation Digital Twin [Data Streams](./DestineStreamer) on DestinEStreamer ➡️ *upgraded access* required.
 * Discover and access Copernicus ERA5 data with [Earth Data Hub](./EarthDataHub) Service examples.
-* Access data on the [Data Lake via EDEN](./EDEN/EDEN-example.ipynb) Service example. 
+* Access data on the [Data Lake via EDEN](./EDEN/EDEN-example.ipynb) Service example.
+* Try out DestinE Climate Adaptation Digital Twin scenarios in [Insula](./Insula) ➡️ *upgraded access* required.
 * Compute the `Standard Evapotranspiration` variable from ERA5 data using the [Drought Assessment](./Insula/Drought_assessment.ipynb) example.
 * Search and download Copernicus Sentinels data via STAC on the [cachea](./cachea/search_and_download.ipynb) example.
 * Create a [DEA](https://dea.destine.eu/web/) data story on Jupyter Notebook using [dea](./dea/create-asset/create-asset.ipynb) Service example.
@@ -30,7 +31,7 @@ Stay tuned for more contents and feel free to contribute!
 * [EDEN](https://finder.eden.destine.eu/) notebooks original content created by [MEEO](https://www.meeo.it/).
 * [DestineStreamer](https://streamer.destine.eu/) examples created by [SamCarraro](https://github.com/SamCarraro) from [GeoVille](https://www.geoville.com/).
 * [DEA](https://dea.destine.eu/web/) and Cache-A tutorials created by [Alia Space Systems](https://www.alia-space.com/).
-* [Insula](https://insula.destine.eu/) contributions by [Bea07](https://github.com/Bea07) from [CGI](https://cgi.com).
+* [Insula](https://insula.destine.eu/) contributions by [Bea07](https://github.com/Bea07), Alen Berta, and [crossi202](https://github.com/crossi202) from [CGI](https://cgi.com).
 
 ## Installation
 The CodeLab environment includes some Python packages pre-installed in the user's environment. The overall list of dependencies is provided in the file [requirements.txt](./requirements.txt).

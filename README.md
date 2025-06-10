@@ -31,7 +31,7 @@ Stay tuned for more contents and feel free to contribute!
 * [EDEN](https://finder.eden.destine.eu/) notebooks original content created by [MEEO](https://www.meeo.it/).
 * [DestineStreamer](https://streamer.destine.eu/) examples created by [SamCarraro](https://github.com/SamCarraro) from [GeoVille](https://www.geoville.com/).
 * [DEA](https://dea.destine.eu/web/) and Cache-A tutorials created by [Alia Space Systems](https://www.alia-space.com/).
-* [Insula](https://insula.destine.eu/) contributions by [Bea07](https://github.com/Bea07), Alen Berta, and [crossi202](https://github.com/crossi202) from [CGI](https://cgi.com).
+* [Insula](https://insula.destine.eu/) contributions by [Bea07](https://github.com/Bea07), [albeCGI](https://github.com/albeCGI), and [crossi202](https://github.com/crossi202) from [CGI](https://cgi.com).
 
 ## Installation
 The CodeLab environment includes some Python packages pre-installed in the user's environment. The overall list of dependencies is provided in the file [requirements.txt](./requirements.txt).

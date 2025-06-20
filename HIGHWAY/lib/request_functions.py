@@ -4,7 +4,41 @@ from colorama import Fore,Style
 import time
 
 
-#----------------Visualizazing the list of datasets-------------------
+# ----------------Visualizazing the list of datasets-------------------
+
+def display_stac_dataset(response):
+    count_results = response['numberMatched']
+    print(Style.BRIGHT + Fore.BLUE + 'Number of datasets in the catalogue: ', count_results)
+
+    dataset_list = response['collections']
+    list(response.keys())
+
+    print(Fore.BLUE + '\033[1m' + 'List of available datasets:')
+    print('----------------------------------------------------------------------')
+    print('\033[0m')
+
+    for k in dataset_list:
+        print(k['title'])
+        print("\033[1m" + " datasetId " + "\033[0m" + "= " + k['id'])
+
+        print('---------------------------------------------------------------')
+
+
+def display_stac_dataset_metadata(response):
+    print('Metadata of ' + Style.BRIGHT + response['title'])
+    print('Description: ' + Style.BRIGHT +  response['description'])
+    print(
+        'Temporal coverage: ' + Style.BRIGHT +
+        response['extent']['temporal']['interval'][0][0] + ' - ' +
+        response['extent']['temporal']['interval'][0][1]
+    )
+
+def display_stac_product(response):
+    for i in response["features"]:
+        print('-----------------------------------------------')
+        print('product: ' + i['id'])
+        print('product start date: ' + i['properties']['start_datetime'])
+        print('direct download: ' + i['assets']['data']['href'])
 
 def display_dataset(response, endpoint):
 
@@ -117,11 +151,11 @@ def download_request(endpoint, location, access_token, sleep = 5):
     This function is the full process on to download an ARCO product.
 
     :param endpoint: The URL of the ARCO Product downloading service.
-    :param location: a string that describes the product to download.
-    :param access_token: The  HIGHWAY access token of the user.
+    :param location: A string that describes the product to download.
+    :param access_token: The HIGHWAY access token of the user.
     :param sleep: How long to sleep between each request (in seconds).
 
-    :return: the filename of the downloaded file.
+    :return: The filename of the downloaded file.
     """
     filename = ""
     headers = {"Authorization": "Bearer %s " % access_token}
@@ -136,7 +170,7 @@ def download_request(endpoint, location, access_token, sleep = 5):
     )
     print(r_processor.status_code)
     if r_processor.status_code == 200:
-        # -- If the product exist, the system create a job to generate the ZIP file.
+        # -- If the product exists, the system creates a job to generate the ZIP file.
         # we need to check that the file is ready
         job_id = r_processor.json()['job_id']
         code = 202

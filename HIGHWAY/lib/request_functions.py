@@ -40,43 +40,6 @@ def display_stac_product(response):
         print('product start date: ' + i['properties']['start_datetime'])
         print('direct download: ' + i['assets']['data']['href'])
 
-def display_dataset(response, endpoint):
-
-    datasetList = response['features']
-    list(response.keys())
-    results = response['properties']['totalResults']
-    print(Style.BRIGHT + Fore.BLUE + 'Number of datasets in the catalogue: ', results)
-    pages = results // 10
-    print(Fore.RED + '\033[1m' + 'List of available datasets:')
-    print('----------------------------------------------------------------------')
-    print('\033[0m')
-
-    for i in range(0, pages + 1):
-        getPage = requests.get(endpoint + '/opensearch/datasets?startIndex=' + str(i * 10)).json()
-        for k in getPage['features']:
-
-            print(Style.BRIGHT + Fore.RED + k['title'] + Fore.BLACK + "\033[1m" + " --> datasetId " + "\033[0m" + "= " + k['datasetId'])
-
-        # Check if services exist
-            wms = False
-            if k.get('services', None):
-                for j in k.get('services', None):
-                    if j['title'] =='wms':
-                        print(Style.BRIGHT + Fore.BLACK +'WMS Server: ' + Style.BRIGHT + Fore.GREEN + j['href'] + '\n')
-                        wms = True
-            if wms==False:
-                            print(Style.BRIGHT + Fore.BLACK + "No WMS service available for this dataset. \n")
-
-            wcs = False
-            if k.get('services', None):
-                for j in k.get('services', None):
-                    if j['title'] =='wcs':
-                        print(Style.BRIGHT + Fore.BLACK +'WCS Server: ' + Style.BRIGHT + Fore.GREEN + j['href'] + '\n')
-                        wcs = True
-            if wcs==False:
-                            print(Style.BRIGHT + Fore.BLACK + "No WCS service available for this dataset."+ '\n')
-            print(Style.BRIGHT + Fore.BLACK + '---------------------------------------------------------------')
-
 
 def display_metadata(endpoint,datasetId,response):
 

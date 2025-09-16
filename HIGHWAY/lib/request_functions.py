@@ -4,44 +4,41 @@ from colorama import Fore,Style
 import time
 
 
-#----------------Visualizazing the list of datasets-------------------
+# ----------------Visualizazing the list of datasets-------------------
 
-def display_dataset(response, endpoint):
+def display_stac_dataset(response):
+    count_results = response['numberMatched']
+    print(Style.BRIGHT + Fore.BLUE + 'Number of datasets in the catalogue: ', count_results)
 
-    datasetList = response['features']
+    dataset_list = response['collections']
     list(response.keys())
-    results = response['properties']['totalResults']
-    print(Style.BRIGHT + Fore.BLUE + 'Number of datasets in the catalogue: ', results)
-    pages = results // 10
-    print(Fore.RED + '\033[1m' + 'List of available datasets:')
+
+    print(Fore.BLUE + '\033[1m' + 'List of available datasets:')
     print('----------------------------------------------------------------------')
     print('\033[0m')
 
-    for i in range(0, pages + 1):
-        getPage = requests.get(endpoint + '/opensearch/datasets?startIndex=' + str(i * 10)).json()
-        for k in getPage['features']:
+    for k in dataset_list:
+        print(k['title'])
+        print("\033[1m" + " datasetId " + "\033[0m" + "= " + k['id'])
 
-            print(Style.BRIGHT + Fore.RED + k['title'] + Fore.BLACK + "\033[1m" + " --> datasetId " + "\033[0m" + "= " + k['datasetId'])
+        print('---------------------------------------------------------------')
 
-        # Check if services exist
-            wms = False
-            if k.get('services', None):
-                for j in k.get('services', None):
-                    if j['title'] =='wms':
-                        print(Style.BRIGHT + Fore.BLACK +'WMS Server: ' + Style.BRIGHT + Fore.GREEN + j['href'] + '\n')
-                        wms = True
-            if wms==False:
-                            print(Style.BRIGHT + Fore.BLACK + "No WMS service available for this dataset. \n")
 
-            wcs = False
-            if k.get('services', None):
-                for j in k.get('services', None):
-                    if j['title'] =='wcs':
-                        print(Style.BRIGHT + Fore.BLACK +'WCS Server: ' + Style.BRIGHT + Fore.GREEN + j['href'] + '\n')
-                        wcs = True
-            if wcs==False:
-                            print(Style.BRIGHT + Fore.BLACK + "No WCS service available for this dataset."+ '\n')
-            print(Style.BRIGHT + Fore.BLACK + '---------------------------------------------------------------')
+def display_stac_dataset_metadata(response):
+    print('Metadata of ' + Style.BRIGHT + response['title'])
+    print('Description: ' + Style.BRIGHT +  response['description'])
+    print(
+        'Temporal coverage: ' + Style.BRIGHT +
+        response['extent']['temporal']['interval'][0][0] + ' - ' +
+        response['extent']['temporal']['interval'][0][1]
+    )
+
+def display_stac_product(response):
+    for i in response["features"]:
+        print('-----------------------------------------------')
+        print('product: ' + i['id'])
+        print('product start date: ' + i['properties']['start_datetime'])
+        print('direct download: ' + i['assets']['data']['href'])
 
 
 def display_metadata(endpoint,datasetId,response):
@@ -117,11 +114,11 @@ def download_request(endpoint, location, access_token, sleep = 5):
     This function is the full process on to download an ARCO product.
 
     :param endpoint: The URL of the ARCO Product downloading service.
-    :param location: a string that describes the product to download.
-    :param access_token: The  HIGHWAY access token of the user.
+    :param location: A string that describes the product to download.
+    :param access_token: The HIGHWAY access token of the user.
     :param sleep: How long to sleep between each request (in seconds).
 
-    :return: the filename of the downloaded file.
+    :return: The filename of the downloaded file.
     """
     filename = ""
     headers = {"Authorization": "Bearer %s " % access_token}
@@ -136,7 +133,7 @@ def download_request(endpoint, location, access_token, sleep = 5):
     )
     print(r_processor.status_code)
     if r_processor.status_code == 200:
-        # -- If the product exist, the system create a job to generate the ZIP file.
+        # -- If the product exists, the system creates a job to generate the ZIP file.
         # we need to check that the file is ready
         job_id = r_processor.json()['job_id']
         code = 202

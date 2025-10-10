@@ -27,7 +27,7 @@ Stay tuned for more contents and feel free to contribute!
 
 ## Credits
 
-* [Earth Data Hub](https://earthdatahub.com) tutorials and Cache-B original content created by [nicolamasotti](https://github.com/nicolamasotti) from [B-Open](https://www.bopen.eu). 
+* [Earth Data Hub](https://earthdatahub.destine.eu) tutorials and Cache-B original content created by [nicolamasotti](https://github.com/nicolamasotti) from [B-Open](https://www.bopen.eu). 
 * [EDEN](https://finder.eden.destine.eu/) notebooks original content created by [MEEO](https://www.meeo.it/).
 * [DestineStreamer](https://streamer.destine.eu/) examples created by [SamCarraro](https://github.com/SamCarraro) from [GeoVille](https://www.geoville.com/).
 * [DEA](https://dea.destine.eu/web/) and Cache-A tutorials created by [Alia Space Systems](https://www.alia-space.com/).

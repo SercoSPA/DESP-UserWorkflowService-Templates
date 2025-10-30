@@ -2,3 +2,6 @@
 __pycache__/
 *.orig
 *.DS_Store
+.idea/
+downloads/
+csv/

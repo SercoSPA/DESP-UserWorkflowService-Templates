@@ -1,0 +1,12 @@
+requests==2.32.3
+colorama==0.4.6
+numpy==2.2.3
+matplotlib==3.10.0
+matplotlib-inline==0.1.7
+Cartopy==0.24.1
+colormaps==0.4.2
+xarray==2024.10.0
+zarr==2.18.4
+lxml==5.3.1
+netCDF4==1.7.2
+numcodecs==0.15.1

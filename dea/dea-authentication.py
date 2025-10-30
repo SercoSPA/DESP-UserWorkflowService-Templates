@@ -1,75 +1,87 @@
-import json
-from pathlib import Path
-from typing import Annotated, Optional
+#! /usr/bin/env python3
+
+from typing import Annotated
 from urllib.parse import parse_qs, urlparse
 
 import requests
 from conflator import CLIArg, ConfigModel, Conflator, EnvVar
 from lxml import html
-from urllib.parse import parse_qs, urlparse
-from conflator import Conflator, ConfigModel, CLIArg, EnvVar
 from pydantic import Field
-from pathlib import Path
-from getpass import getpass, getuser
-import json
-import sys
+import getpass
 
-IAM_URL = "https://auth.destine.eu"
-CLIENT_ID = "polytope-api-public"
-REALM = "desp"
-SERVICE_URL = "https://polytope.lumi.apps.dte.destination-earth.eu/"
+SERVICE_URL = "https://dea.destine.eu/api"
 
 
 class Config(ConfigModel):
     user: Annotated[
-        Optional[str],
+        str | None,
         Field(description="Your DESP username"),
         CLIArg("-u", "--user"),
         EnvVar("USER"),
     ] = None
     password: Annotated[
-        Optional[str],
+        str | None,
         Field(description="Your DESP password"),
         CLIArg("-p", "--password"),
         EnvVar("PASSWORD"),
     ] = None
-    outpath: Annotated[
+    iam_url: Annotated[
         str,
-        Field(description='The file to write the token to (or "stdout")'),
-        CLIArg("-o", "--outpath"),
-    ] = str(Path().home() / ".polytopeapirc")
+        Field(description="The URL of the IAM server"),
+        CLIArg("--iam-url"),
+        EnvVar("IAM_URL"),
+    ] = "https://auth.destine.eu"
+    iam_realm: Annotated[
+        str,
+        Field(description="The realm of the IAM server"),
+        CLIArg("--iam-realm"),
+        EnvVar("REALM"),
+    ] = "desp"
+    iam_client: Annotated[
+        str,
+        Field(description="The client ID of the IAM server"),
+        CLIArg("--iam-client"),
+        EnvVar("CLIENT_ID"),
+    ] = "dea_client"
+
 
 config = Conflator("despauth", Config).load()
 
-if config.user == None:
-    config.user = getpass(prompt='Username: ')
-if config.password == None:
-    config.password = getpass(prompt='Password: ')
+if config.user is None:
+    user = input("Type your username: ")
+else:
+    user = config.user
+
+if config.password is None:
+    password = getpass.getpass("Type your password: ")
+else:
+    password = config.password
+
 
 with requests.Session() as s:
+
     # Get the auth url
-    auth_url = (
-        html.fromstring(
-            s.get(
-                url=IAM_URL + "/realms/" + REALM + "/protocol/openid-connect/auth",
-                params={
-                    "client_id": CLIENT_ID,
-                    "redirect_uri": SERVICE_URL,
-                    "scope": "openid offline_access",
-                    "response_type": "code",
-                },
-            ).content.decode()
-        )
-        .forms[0]
-        .action
+    response = s.get(
+        url=config.iam_url
+        + "/realms/"
+        + config.iam_realm
+        + "/protocol/openid-connect/auth",
+        params={
+            "client_id": config.iam_client,
+            "redirect_uri": SERVICE_URL,
+            "scope": "openid",
+            "response_type": "code",
+        },
     )
+    response.raise_for_status()
+    auth_url = html.fromstring(response.content.decode()).forms[0].action
 
     # Login and get auth code
     login = s.post(
         auth_url,
         data={
-            "username": config.user,
-            "password": config.password,
+            "username": user,
+            "password": password,
         },
         allow_redirects=False,
     )
@@ -92,9 +104,12 @@ with requests.Session() as s:
 
     # Use the auth code to get the token
     response = requests.post(
-        IAM_URL + "/realms/" + REALM + "/protocol/openid-connect/token",
+        config.iam_url
+        + "/realms/"
+        + config.iam_realm
+        + "/protocol/openid-connect/token",
         data={
-            "client_id": CLIENT_ID,
+            "client_id": config.iam_client,
             "redirect_uri": SERVICE_URL,
             "code": auth_code,
             "grant_type": "authorization_code",
@@ -106,13 +121,8 @@ with requests.Session() as s:
         raise Exception("Failed to get token")
 
     # instead of storing the access token, we store the offline_access (kind of "refresh") token
-    token = response.json()["refresh_token"]
-    # offline_token = response.json()['refresh_token']
+    #token = response.json()["access_token"]
+    token = response.json()["access_token"]
 
-    if config.outpath != "stdout":
-        with open(config.outpath, "w") as file:
-            dico = {"user_key": token}
-            json.dump(dico, file)
-            print(f"Token successfully written to {config.outpath}")
-    else:
-        print(token)
+    print(token)
+    #print(response.json())

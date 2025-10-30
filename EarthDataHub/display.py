@@ -91,7 +91,6 @@ def compare(data, historic, time="time", ylim=[0, 1300]):
         facecolor="gray"
     )
 
-
     month_starts = [1,32,61,92,122,153,183,214,245,275,306,336]
     month_names = ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
   
@@ -100,9 +99,77 @@ def compare(data, historic, time="time", ylim=[0, 1300]):
     ax.set_xticks(month_starts)
     ax.set_xticklabels(month_names)
     ax.set_xlabel(None)
-    ax.set_ylabel(None);
+    ax.set_ylabel(None)
     plt.xticks(fontsize=10)
     plt.yticks(fontsize=10)
     
     return ax
 
+
+def albers_equal_area(da, ax=None, vmax=None, vmin=None, add_colorbar=True, cbar_kwargs=None, contour=False):
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(15, 15), subplot_kw={"projection": crs.AlbersEqualArea()})
+
+    if contour == True:
+        da.plot.contourf(
+            ax=ax,
+            transform=crs.PlateCarree(),
+
+            cmap="coolwarm",
+            vmin=vmin,
+            vmax=vmax,
+            add_colorbar=add_colorbar,
+            cbar_kwargs=cbar_kwargs
+        )
+    else:
+        da.plot(
+            ax=ax,
+            transform=crs.PlateCarree(),
+            cmap="coolwarm",
+            vmin=vmin,
+            vmax=vmax,
+            add_colorbar=add_colorbar,
+            cbar_kwargs=cbar_kwargs
+        )
+
+    lat = da.latitude
+    lon = da.longitude
+    ax.set_extent([min(lon) + 3, max(lon) - 4, min(lat) + 4, max(lat) - 4], crs=crs.PlateCarree())
+    ax.set_title("")
+    ax.add_feature(feature.COASTLINE)
+    ax.add_feature(feature.LAKES.with_scale("10m"), color='forestgreen')
+    ax.add_feature(feature.RIVERS)
+    ax.add_feature(feature.COASTLINE, linewidth=0.5)
+    ax.add_feature(feature.BORDERS, linestyle=':', linewidth=0.5)
+    ax.add_feature(feature.OCEAN, facecolor='lightblue', zorder=2)
+    ax.gridlines(draw_labels=True)
+
+
+def compare_map(da1, da2, title_0="", title_1="", contour=False):
+    if 'GRIB_units' in da1.attrs and da1.attrs['GRIB_units'] == 'K':
+        da1 = da1 - 273.15
+        da1.attrs["units"] = "°C"
+
+    if 'GRIB_units' in da2.attrs and da2.attrs['GRIB_units'] == 'K':
+        da2 = da2 - 273.15
+        da2.attrs["units"] = "°C"
+
+    fig, axes = plt.subplots(1, 2, figsize=(15, 15), subplot_kw={"projection": crs.AlbersEqualArea()})
+
+    vmax = max(da1.values.max(), da2.values.max())
+    vmin = max(da1.values.min(), da2.values.min())
+
+    cbar_kwargs = {
+        # 'label': '',
+        'shrink': 0.51,  # % of the plot heigth
+        'aspect': 15,  # height/width ratio
+        'pad': 0.1  # padding
+    }
+
+    albers_equal_area(da1, axes[0], vmax, vmin, add_colorbar=True, cbar_kwargs=cbar_kwargs, contour=contour)
+    albers_equal_area(da2, axes[1], vmax, vmin, add_colorbar=True, cbar_kwargs=cbar_kwargs, contour=contour)
+
+    axes[0].set_title(title_0)
+    axes[1].set_title(title_1)
+    plt.tight_layout()
+    plt.show()

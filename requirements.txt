@@ -82,6 +82,7 @@ loguru==0.7.2
 lxml==5.2.1
 lz4==4.3.3
 Markdown==3.6
+m3u8==6.0.0
 markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 matplotlib==3.8.4
@@ -94,6 +95,7 @@ nc-time-axis==1.4.1
 nest-asyncio==1.6.0
 netCDF4==1.6.5
 nodeenv==1.8.0
+notebook_stream_decoder @ https://api.bitbucket.org/2.0/repositories/geoville/notebook_stream_decoder_whl/downloads/notebook_stream_decoder-0.1.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
 numba==0.59.1
 numbagg==0.8.1
 numcodecs==0.12.1

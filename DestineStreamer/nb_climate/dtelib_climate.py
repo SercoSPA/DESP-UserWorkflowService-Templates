@@ -8,7 +8,6 @@ import requests
 from requests import auth
 
 API = "https://streamer.destine.eu/api/streaming/data/"
-# API = "https://127.0.0.1:39720/api/streaming/data/"
 STREAM_EP = "metadata/{program_subset}/{variable}/{start_date}/{end_date}"
 OV_EP = "overview/"
 

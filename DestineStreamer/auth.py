@@ -24,7 +24,7 @@ password = getpass.getpass("Type your password: ")
 
 class Settings(BaseSettings):
     # AUTH
-    KEYCLOAK_URL: str = "https://auth.destine.eu/"
+    KEYCLOAK_URL: str = "https://auth.destine.eu"
     KEYCLOAK_REALM: str = "desp"
 
     KEYCLOAK_REDIRECT_URL: str = (

@@ -8,7 +8,6 @@ import requests
 from requests import auth
 
 API = "https://streamer.destine.eu/api/streaming/s3/data/metadata/{}"
-# API = "http://127.0.0.1:8000/api/streaming/s3/data/metadata/{}"
 START_QP = "start_date"
 END_QP = "end_date"
 

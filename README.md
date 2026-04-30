@@ -19,7 +19,7 @@ All examples are written in Python and are designed to work seamlessly with any 
 * Try out DestinE Climate Adaptation Digital Twin scenarios in [Insula](./Insula) ➡️ *upgraded access* required.
 * Compute the `Standard Evapotranspiration` variable from ERA5 data using the [Drought Assessment](./Insula/Drought_assessment.ipynb) example.
 * Create a [DEA data story](./dea/create-asset/create-asset.ipynb) using the service example notebook.
-* Try out [destinepyauth](./destinepyauth/destinepyauth_example.ipynb) for harmonized authentication against DestinE platform services.
+* Try out [destinepyauth](./misc/destinepyauth_example.ipynb) for harmonized authentication against DestinE platform services.
 
 Notebook templates are all a quickstart to DestinE Platform services. [Insula Code Lab](https://code.insula.destine.eu/) includes also ECMWF's Polytope and EUMETSAT's HDA examples in the user's own environment.
 
@@ -32,7 +32,6 @@ Stay tuned for more contents and feel free to contribute!
 * [DestineStreamer](https://streamer.destine.eu/) examples created by [SamCarraro](https://github.com/SamCarraro) from [GeoVille](https://www.geoville.com/).
 * [DEA](https://dea.destine.eu/web/) tutorials created by [Alia Space Systems](https://www.alia-space.com/).
 * [Insula](https://insula.destine.eu/) contributions by [Bea07](https://github.com/Bea07), [albeCGI](https://github.com/albeCGI), and [crossi202](https://github.com/crossi202) from [CGI](https://cgi.com).
-* [SafeAtSea](https://destine.ecmwf.int/use-case/destine-pilot-service-marine-safety-for-the-energy-industry/) tutorial created by [AleksiNummelin](https://github.com/AleksiNummelin) from [NORCE](https://www.norceresearch.no/en/).
 * [destinepyauth](https://github.com/SercoSPA/DestinE-Platform-AuthN) tutorial created by [purnelldj](https://github.com/purnelldj) from [Serco](https://www.serco.com/).
 
 ## Installation

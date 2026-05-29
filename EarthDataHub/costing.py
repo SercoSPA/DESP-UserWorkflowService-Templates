@@ -30,7 +30,7 @@ def estimate_download_size(da):
     needed_chunks = {key: len(value) for key, value in da.chunksizes.items()}
     # Calculate total number of chunks (including the dropped dimensions which require 1 chunk)
     total_chunks = math.prod(needed_chunks.get(dim, 1) for dim in chunk_shape)
-    #print(f'needed chunks: {needed_chunks}. Total: {total_chunks}')
+    print(f'Needed chunks: {needed_chunks}. Total: {total_chunks}')
     
     # 3. Calculate the download shape. Use .get() to default any dropped dimension to 1 chunk.
     download_shape = {

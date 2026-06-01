@@ -1,6 +1,8 @@
 name: CI
 
-# Lint + validate + secret scan. None of these require the special DestinE
+# CI runs the SAME checks contributors run locally via pre-commit — the
+# .pre-commit-config.yaml is the single source of truth, so there is no drift
+# between local hooks and CI. None of these checks need the special DestinE
 # kernel or data access, so they run on a stock GitHub runner.
 
 on:
@@ -15,64 +17,35 @@ permissions:
 # setup, repin each to a full commit SHA (e.g. actions/checkout@<sha>).
 
 jobs:
-  lint-validate:
-    name: Lint & validate notebooks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install tooling
-        run: pip install ruff==0.4.1 nbstripout==0.7.1 "nbformat>=5,<6" pip-audit
-
-      - name: Validate notebook JSON / nbformat schema
-        run: |
-          python - <<'PY'
-          import glob, sys, nbformat
-          bad = []
-          for f in sorted(glob.glob("**/*.ipynb", recursive=True)):
-              try:
-                  nbformat.validate(nbformat.read(f, as_version=4))
-              except Exception as e:
-                  bad.append((f, str(e).splitlines()[0]))
-          for f, e in bad:
-              print(f"::error file={f}::{e}")
-          print(f"Validated notebooks, {len(bad)} invalid.")
-          sys.exit(1 if bad else 0)
-          PY
-
-      - name: Lint code cells (fatal rules only)
-        # Rules, notebook inclusion, and per-file ignores come from ruff.toml.
-        run: ruff check --output-format=github .
-
-      - name: Verify notebook metadata is stripped
-        run: |
-          nbstripout --keep-output $(git ls-files '*.ipynb')
-          if ! git diff --quiet; then
-            echo "::error::Notebooks contain un-stripped metadata/execution counts."
-            echo "Run locally: pre-commit run nbstripout --all-files"
-            git --no-pager diff --stat
-            exit 1
-          fi
-
-      - name: Dependency vulnerability audit
-        # Non-blocking on first iteration: requirements.txt pins ~150 deps and
-        # several have known CVEs. Review findings, then drop the `|| true`
-        # once the backlog is triaged to make this gating.
-        run: pip-audit -r requirements.txt || true
-
-  secrets:
-    name: Secret scan
+  pre-commit:
+    name: Lint, validate & secret scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # full history so gitleaks can scan all commits
-      - uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # gitleaks-action is free for public repos. For a private/org repo,
-          # set the GITLEAKS_LICENSE secret, otherwise this step will fail.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Runs every hook in .pre-commit-config.yaml against all files:
+      # nbstripout (verify), ruff, nbformat-validate, gitleaks, JSON/merge
+      # hygiene. A hook that modifies a file (e.g. nbstripout) fails the run
+      # and shows the diff.
+      - uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: --all-files --show-diff-on-failure
+
+  audit:
+    name: Dependency vulnerability audit (advisory)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pip-audit
+      # Advisory and network-dependent, so kept out of pre-commit and
+      # non-blocking for now: requirements.txt pins ~150 deps and several have
+      # known CVEs. Triage the backlog, then drop `|| true` to make it gating.
+      - name: Audit pinned dependencies
+        run: pip-audit -r requirements.txt || true

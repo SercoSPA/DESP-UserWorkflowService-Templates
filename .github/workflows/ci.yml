@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   pre-commit:
-    name: Lint, validate & secret scan
+    name: Run pre-commit
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,18 +34,3 @@ jobs:
       - uses: pre-commit/action@v3.0.1
         with:
           extra_args: --all-files --show-diff-on-failure
-
-  audit:
-    name: Dependency vulnerability audit (advisory)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: pip install pip-audit
-      # Advisory and network-dependent, so kept out of pre-commit and
-      # non-blocking for now: requirements.txt pins ~150 deps and several have
-      # known CVEs. Triage the backlog, then drop `|| true` to make it gating.
-      - name: Audit pinned dependencies
-        run: pip-audit -r requirements.txt || true

@@ -1,10 +1,5 @@
 name: CI
 
-# CI runs the SAME checks contributors run locally via pre-commit — the
-# .pre-commit-config.yaml is the single source of truth, so there is no drift
-# between local hooks and CI. None of these checks need the special DestinE
-# kernel or data access, so they run on a stock GitHub runner.
-
 on:
   pull_request:
   push:
@@ -13,8 +8,6 @@ on:
 permissions:
   contents: read
 
-# NOTE: actions below are pinned by tag for readability. For a hardened
-# setup, repin each to a full commit SHA (e.g. actions/checkout@<sha>).
 
 jobs:
   pre-commit:
@@ -22,15 +15,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # full history so gitleaks can scan all commits
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       # Runs every hook in .pre-commit-config.yaml against all files:
-      # nbstripout (verify), ruff, nbformat-validate, gitleaks, JSON/merge
-      # hygiene. A hook that modifies a file (e.g. nbstripout) fails the run
-      # and shows the diff.
+      # nbstripout (verify), ruff, nbformat-validate, JSON/merge hygiene.
+      # A hook that modifies a file (e.g. nbstripout) fails the run and shows
+      # the diff.
+      #
+      # NOTE: the gitleaks pre-commit hook only scans STAGED changes, so under
+      # --all-files (nothing staged) it is effectively a no-op here. Its job is
+      # to block secrets locally before they are committed. Full-tree/history
+      # secret scanning in CI is handled by the dedicated `secrets` job below.
       - uses: pre-commit/action@v3.0.1
         with:
           extra_args: --all-files --show-diff-on-failure
+
+  secrets:
+    name: Secret scan (full history)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history so gitleaks scans every commit
+      # `gitleaks detect` scans the working tree AND all git history, unlike
+      # the staged-only pre-commit hook. Uses .gitleaks.toml (which adds the
+      # DestinE edh_pat_/edh_key_ rules the default ruleset misses).
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITLEAKS_CONFIG: .gitleaks.toml

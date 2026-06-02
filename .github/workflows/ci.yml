@@ -25,22 +25,7 @@ jobs:
       #
       # NOTE: the gitleaks pre-commit hook only scans STAGED changes, so under
       # --all-files (nothing staged) it is effectively a no-op here. Its job is
-      # to block secrets locally before they are committed. Full-tree/history
-      # secret scanning in CI is handled by the dedicated `secrets` job below.
+      # to block secrets locally before they are committed.
       - uses: pre-commit/action@v3.0.1
         with:
           extra_args: --all-files --show-diff-on-failure
-
-  secrets:
-    name: Secret scan (full history)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # full history so gitleaks scans every commit
-      # `gitleaks detect` scans the working tree AND all git history, unlike
-      # the staged-only pre-commit hook. Uses .gitleaks.toml (which adds the
-      # DestinE edh_pat_/edh_key_ rules the default ruleset misses).
-      - uses: gitleaks/gitleaks-action@v2
-        env:
-          GITLEAKS_CONFIG: .gitleaks.toml

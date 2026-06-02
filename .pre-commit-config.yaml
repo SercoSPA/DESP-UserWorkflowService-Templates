@@ -13,12 +13,28 @@
 
 repos:
   # --- Notebook hygiene: strip volatile metadata, keep figures -------------
+  # --keep-output keeps rendered figures (part of the tutorials) but clears
+  # execution_count, cell ids, and per-cell execution timestamps.
+  # --extra-keys additionally drops notebook-level metadata that churns
+  # per-environment:
+  #   * kernelspec     -> leaks personal kernel names (my_env, insulacode, ...)
+  #   * language_info  -> pins a Python version (2.7.6 .. 3.12) per author
+  #   * anaconda-cloud -> Anaconda client cruft
+  # Jupyter regenerates kernelspec/language_info on open, so nothing is lost.
+  # Intentional catalog metadata (title/author/description/services/image/tags)
+  # is NOT listed here and is preserved.
+  # Trade-off: with kernelspec stripped, opening a notebook selects the default
+  # kernel instead of a remembered one — desirable here, since the README tells
+  # users which kernel to pick. To keep kernelspec, remove it from --extra-keys.
   - repo: https://github.com/kynan/nbstripout
     rev: 0.7.1
     hooks:
       - id: nbstripout
         name: strip notebook metadata (keep outputs)
-        args: [--keep-output]
+        args:
+          - --keep-output
+          - --extra-keys
+          - metadata.kernelspec metadata.language_info metadata.anaconda-cloud
 
   # --- Lint code cells: catch broken cells, not style nits -----------------
   # Rules + notebook handling live in ruff.toml (single source of truth,

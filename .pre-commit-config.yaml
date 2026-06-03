@@ -1,0 +1,78 @@
+# Pre-commit hooks for the DestinE notebook tutorials repo.
+#
+# Setup (once per clone):
+#     pip install pre-commit          # already pinned in requirements.txt
+#     pre-commit install
+#
+# Run manually against everything:
+#     pre-commit run --all-files
+#
+# The nbstripout hook below uses --keep-output: it KEEPS rendered outputs
+# (figures/plots are part of these tutorials) but strips execution_count and
+# the per-cell execution timestamps that cause most of the diff noise.
+
+repos:
+  # --- Notebook hygiene: strip volatile metadata, keep figures -------------
+  # --keep-output keeps rendered figures (part of the tutorials) but clears
+  # execution_count, cell ids, and per-cell execution timestamps.
+  # --extra-keys additionally drops notebook-level metadata that churns
+  # per-environment:
+  #   * kernelspec     -> leaks personal kernel names (my_env, insulacode, ...)
+  #   * language_info  -> pins a Python version (2.7.6 .. 3.12) per author
+  #   * anaconda-cloud -> Anaconda client cruft
+  # Jupyter regenerates kernelspec/language_info on open, so nothing is lost.
+  # Intentional catalog metadata (title/author/description/services/image/tags)
+  # is NOT listed here and is preserved.
+  # Trade-off: with kernelspec stripped, opening a notebook selects the default
+  # kernel instead of a remembered one — desirable here, since the README tells
+  # users which kernel to pick. To keep kernelspec, remove it from --extra-keys.
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+        name: strip notebook metadata (keep outputs)
+        args:
+          - --keep-output
+          - --extra-keys
+          - metadata.kernelspec metadata.language_info metadata.anaconda-cloud
+
+  # --- Lint code cells: catch broken cells, not style nits -----------------
+  # Rules + notebook handling live in ruff.toml (single source of truth,
+  # shared with CI).
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.1  # matches ruff pin in requirements.txt
+    hooks:
+      - id: ruff
+        name: ruff (fatal rules, py + notebooks)
+        types_or: [python, pyi, jupyter]
+
+  # --- Notebook schema validation ------------------------------------------
+  # check-json (below) only confirms well-formed JSON; this confirms the file
+  # is a valid notebook per the nbformat schema. Runs without the DestinE
+  # kernel, so it works locally and in CI.
+  - repo: local
+    hooks:
+      - id: nbformat-validate
+        name: validate notebook nbformat schema
+        language: python
+        additional_dependencies: ["nbformat>=5,<6"]
+        files: \.ipynb$
+        entry: python -c "import sys, nbformat; [nbformat.validate(nbformat.read(f, as_version=4)) for f in sys.argv[1:]]"
+
+  # --- Secret scanning -----------------------------------------------------
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+
+  # --- General hygiene -----------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-json            # notebooks are JSON; catches corruption
+      - id: check-merge-conflict  # blocks committed conflict markers
+      # - id: check-added-large-files
+      #   args: [--maxkb=1024]      # stop multi-MB notebooks creeping back in
+        # NOTE: several existing notebooks already exceed this. On first run
+        # either raise the limit or `git add` offenders intentionally; the
+        # goal is to prevent NEW bloat, not to block the current state.

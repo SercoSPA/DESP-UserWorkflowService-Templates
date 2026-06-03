@@ -68,5 +68,23 @@ ipython kernel install --user --name=my_env
 > **Note**: Do not forget to change the kernel to `my_env` using the upper-right button within the Jupyter user interface every time you want to run your code.
 > Occasionally, a stop/start of the service is required to apply environment changes. Users can manage the server stop/start commands via the *File* dropdown menu under *Hub Control Panel*.
 
+## Contributing
+Contributions are welcome! Because this repository is made of Jupyter notebooks, we use [pre-commit](https://pre-commit.com/) hooks to keep diffs reviewable (stripping volatile notebook metadata while **keeping figures**), to lint code cells, and to scan for accidentally committed secrets.
+
+Before opening a pull request:
+
+1. Install and enable the hooks (one-time, per clone):
+   ```
+   pip install pre-commit
+   pre-commit install
+   ```
+2. Run the hooks against everything and fix anything they flag:
+   ```
+   pre-commit run --all-files
+   ```
+   Some hooks (e.g. notebook metadata stripping) edit files in place — just re-stage the changes and commit again.
+
+The same checks run automatically in CI on every pull request, so running them locally first avoids a failed build.
+
 ## Contact
 If you have questions or need support with these examples contact the ➡️ [DestinE support](https://platform.destine.eu/support).

@@ -1,0 +1,23 @@
+# Ruff config for the notebook tutorials repo.
+#
+# Scope is deliberately narrow for a first iteration: catch BROKEN cells
+# (syntax errors, undefined names in plain .py), not style. Widen `select`
+# later once the codebase is clean.
+
+target-version = "py311"
+
+# ruff 0.4.x does not auto-discover notebooks during a directory walk
+# (`ruff check .`), so opt them in explicitly.
+extend-include = ["*.ipynb"]
+
+[lint]
+# E9  = syntax errors        F82 = undefined names
+# F63 = invalid comparisons  F7  = misplaced statements
+select = ["E9", "F63", "F7", "F82"]
+
+[lint.per-file-ignores]
+# In notebooks, names are frequently introduced in ways ruff can't track:
+# line magics (`%time x = ...`), `from mod import *`, or state carried over
+# from an earlier interactive session. That makes F821 (undefined name) a
+# false-positive generator. Keep syntax-error detection; drop F821 here.
+"*.ipynb" = ["F821"]

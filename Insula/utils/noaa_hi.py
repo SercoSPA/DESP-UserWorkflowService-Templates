@@ -67,7 +67,7 @@ def categorize_hi(hi_value):
 # Apply the categorization function to the xarray DataArray
 def apply_categorization(da):
     categorized = xr.apply_ufunc(
-        np.vectorize(categorize_hu), 
+        np.vectorize(categorize_hi), 
         da, 
         vectorize=True, 
         dask='parallelized', 

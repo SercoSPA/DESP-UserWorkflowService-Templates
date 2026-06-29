@@ -34,39 +34,52 @@ Stay tuned for more contents and feel free to contribute!
 * [Insula](https://insula.destine.eu/) contributions by [Bea07](https://github.com/Bea07), [albeCGI](https://github.com/albeCGI), and [crossi202](https://github.com/crossi202) from [CGI](https://cgi.com).
 * [destinepyauth](https://github.com/SercoSPA/DestinE-Platform-AuthN) tutorial created by [purnelldj](https://github.com/purnelldj) from [Serco](https://www.serco.com/).
 
-## Installation
-The CodeLab environment includes some Python packages pre-installed in the user's environment. The overall list of dependencies is provided in the file [requirements.txt](./requirements.txt).
+## The CodeLab Environment
+
+The CodeLab environment includes some Python packages pre-installed in the user's environment. The full list of dependencies is provided in the file [requirements.txt](./requirements.txt).
 > **Note**: Pre-installed Python packages listed in this file provide a snapshot of dependencies needed to run the example notebooks provided in this repository.
+
+### Install new packages
 
 To install new packages persistently in the coding environment, users can create their own virtual environment in Insula Code Lab by following the guidelines below.
 
-## How to create a virtual environment
-Open a Terminal window and create a virtual environment named `my_env`: 
+#### Create a new environment
+
 ```
 python -m venv /home/jovyan/my_env
 ```
-Activate it:
+
+Alternatively, if you also want access to the platform’s pre-installed packages from within the environment, add the `--system-site-packages` flag. Omit it to start from a clean environment.
+
+```
+python -m venv /home/jovyan/my_env --system-site-packages
+```
+
+#### Activate the new environment
+
 ```
 source /home/jovyan/my_env/bin/activate
 ```
-### Install dependencies
-Install Python dependencies in the virtual environment as follows.<br>
-* Open a terminal window and install a single module singularly:
+
+#### Install a new package
+
+Install ipykernel together with your package so the environment can register its own notebook kernel. Always invoke pip as `python -m pip`, so packages install into the active environment.
+
 ```
-pip install <package>
+python -m pip install ipykernel dvc # dvc is an arbitrary package in this example.
 ```
-Or install modules in batch by means of a requirements file:
-* Open a terminal window and type:
+
+> **Note**: If you install a package while a notebook is already running on that environment’s kernel, restart the kernel before you can import and use the new package. A running kernel does not pick up packages added after it started.
+
+#### Enable the environment for usage in a notebook’s kernel
+
 ```
-pip install -r requirements.txt
+python -m ipykernel install --user --name=my_env
 ```
-### Install the kernel
-Install the Jupyter kernel `my_env`:
-```
-ipython kernel install --user --name=my_env
-```
-> **Note**: Do not forget to change the kernel to `my_env` using the upper-right button within the Jupyter user interface every time you want to run your code.
-> Occasionally, a stop/start of the service is required to apply environment changes. Users can manage the server stop/start commands via the *File* dropdown menu under *Hub Control Panel*.
+
+then refresh the browser.
+
+> **Note**: Register the kernel with `python -m ipykernel`, not `ipython kernel install`. The latter may register the Conda ipython instead of the environment’s Python: the package would be installed into `my_env`, while the notebook kernel would still start with `/opt/conda/bin/python`, so the environment is ignored and import raises a `ModuleNotFoundError`. Using `python -m ipykernel` binds the kernel to the environment’s interpreter and avoids this mismatch.
 
 ## Contributing
 Contributions are welcome! Because this repository is made of Jupyter notebooks, we use [pre-commit](https://pre-commit.com/) hooks to keep diffs reviewable (stripping volatile notebook metadata while **keeping figures**), to lint code cells, and to scan for accidentally committed secrets.

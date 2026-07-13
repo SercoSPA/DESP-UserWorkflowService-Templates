@@ -47,6 +47,7 @@ healpy==1.19.0
 jupyter-resource-usage==1.2.1
 m3u8==6.0.0
 notebook_stream_decoder @ https://api.bitbucket.org/2.0/repositories/geoville/notebook_stream_decoder_whl/downloads/notebook_stream_decoder-0.1.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+notebook_stream_decoder_geohash @ https://bitbucket.org/geoville/notebook_stream_decoder_geohash_whl/raw/7a3468694c7c912f3a08394478776563fa7c1c55/notebook_stream_decoder_geohash-0.1.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
 pyspectral==0.14.3
 pystac-client==0.9.0
 ratelimit==2.2.1

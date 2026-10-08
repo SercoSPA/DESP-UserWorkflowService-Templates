@@ -2,7 +2,7 @@
 
 The notebooks in this folder allow the user to interact with ESA's digital twin component for ice sheets ([DTC-IS](https://dtc-ice-sheets.org/)).
 
-User's may also wish to interact with the digital twin via the [dashboard](https://dashboards.dtc-ice-sheets.org/)
+User's may also wish to interact with the digital twin via the [dashboard](https://dashboards.dtc-ice-sheets.org/).
 
 ## Getting started
 

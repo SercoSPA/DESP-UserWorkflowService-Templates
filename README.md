@@ -33,6 +33,7 @@ Stay tuned for more contents and feel free to contribute!
 * [DEA](https://dea.destine.eu/web/) tutorials created by [Alia Space Systems](https://www.alia-space.com/).
 * [Insula](https://insula.destine.eu/) contributions by [Bea07](https://github.com/Bea07), [albeCGI](https://github.com/albeCGI), and [crossi202](https://github.com/crossi202) from [CGI](https://cgi.com).
 * [destinepyauth](https://github.com/SercoSPA/DestinE-Platform-AuthN) tutorial created by [purnelldj](https://github.com/purnelldj) from [Serco](https://www.serco.com/).
+* [DTC_ICE_SHEETS](https://eof.esa.int/component/dtc-ice-sheets/) created by the DTC Ice Sheets consortium.
 
 ## The CodeLab Environment
 

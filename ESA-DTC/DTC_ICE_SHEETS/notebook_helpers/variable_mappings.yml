@@ -1,0 +1,484 @@
+ICE_VELOCITY-S1-MONTHLY:
+  description: "Ice Velocity from Sentinel-1 monthly composite"
+  label: "Ice Velocity - Sentinel-1 (Monthly)"
+  region: "ice_shelf"
+  variables:
+    land_ice_surface_velocity_magnitude:
+      units: "m d-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Ice velocity - magnitude"
+      y_axis_label: "Ice velocity - magnitude"
+    land_ice_surface_easting_velocity:
+      units: "m d-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_surface_easting_stddev"
+      measurement_uncertainty_type: "std"
+      label: "Ice velocity - x"
+      y_axis_label: "Ice velocity - x"
+    land_ice_surface_northing_velocity:
+      units: "m d-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_surface_northing_stddev"
+      measurement_uncertainty_type: "std"
+      label: "Ice velocity - y"
+      y_axis_label: "Ice velocity - y"
+
+
+ICE_VELOCITY-S1-YEARLY:
+  description: "Ice Velocity from Sentinel-1 yearly composite"
+  label: "Ice Velocity - Sentinel-1 (Yearly)"
+  region: "ice_shelf"
+  variables:
+    land_ice_surface_velocity_magnitude:
+      units: "m d-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Ice velocity - magnitude"
+      y_axis_label: "Ice velocity - magnitude"
+    land_ice_surface_easting_velocity:
+      units: "m d-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_surface_easting_stddev"
+      measurement_uncertainty_type: "std"
+      label: "Ice velocity - x"
+      y_axis_label: "Ice velocity - x"
+    land_ice_surface_northing_velocity:
+      units: "m d-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_surface_northing_stddev"
+      measurement_uncertainty_type: "std"
+      label: "Ice velocity - y"
+      y_axis_label: "Ice velocity - y"
+
+
+ITS_LIVE_ICE_VELOCITY:
+  description: "ITSLive annual velocity data."
+  label: "ITSLive Velocity"
+  region: "ice_shelf"
+  variables:
+    land_ice_velocity_magnitude:
+      units: "m s-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_velocity_magnitude_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Ice velocity - magnitude"
+      y_axis_label: "Ice velocity - magnitude"
+    land_ice_velocity_x:
+      units: "m s-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_velocity_x_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Ice velocity - x"
+      y_axis_label: "Ice velocity - x"
+    land_ice_velocity_y:
+      units: "m s-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_velocity_y_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Ice velocity - y"
+      y_axis_label: "Ice velocity - y"
+
+
+C3S_SEA_ICE_EDGE:
+  description: "CS3 sea ice edge."
+  label: "Sea Ice Edge"
+  region: "ocean"
+  variables:
+    sea_ice_edge:
+      units: "#"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "sea_ice_edge_uncertainty"
+      measurement_uncertainty_type: "std"
+      label: "Sea Ice Edge"
+      y_axis_label: "Sea Ice Edge"
+    status_flag_ice_edge:
+      units: "#"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Ice Edge Status Flag"
+      y_axis_label: "Sea Ice Edge Status Flag"
+
+
+C3S_SEA_ICE_CONCENTRATION:
+  description: "CS3 mean monthly sea ice concentration."
+  label: "Sea Ice Concentration"
+  region: "ocean"
+  variables:
+    sea_ice_area_fraction:
+      units: "%"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Ice Concentration"
+      y_axis_label: "Sea Ice Concentration"
+    raw_ice_conc_values:
+      units: "%"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Ice Concentration (raw)"
+      y_axis_label: "Sea Ice Concentration (raw)"
+    sea_ice_status_flag:
+      units: "%"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Ice Status Flag"
+      y_axis_label: "Sea Ice Status Flag"
+
+
+GLORYS12V1:
+  description: "The GLORY ocean reanalysis dataset"
+  label: "GLORY Ocean Re-analysis"
+  region: "ocean"
+  variables:
+    eastward_sea_ice_velocity:
+      units: "m s-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Ice Velocity - Eastward"
+      y_axis_label: "Sea Ice Velocity - Eastward"
+    eastward_sea_water_velocity:
+      units: "m s-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Water Velocity - Eastward"
+      y_axis_label: "Sea Water Velocity - Eastward"
+    northward_sea_ice_velocity:
+      units: "m s-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Ice Velocity - Northward"
+      y_axis_label: "Sea Ice Velocity - Northward"
+    northward_sea_water_velocity:
+      units: "m s-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Water Velocity - Northward"
+      y_axis_label: "Sea Water Velocity - Northward"
+    ocean_mixed_layer_thickness_defined_by_sigma_theta:
+      units: "m"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Ocean Mixed Layer Thickness"
+      y_axis_label: "Ocean Mixed Layer Thickness"
+    sea_ice_area_fraction:
+      units: "#"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Ice Fraction"
+      y_axis_label: "Sea Ice Fraction"
+    sea_ice_thickness:
+      units: "m"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Ice Thickness"
+      y_axis_label: "Sea Ice Thickness"
+    sea_surface_height_above_geoid:
+      units: "m"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Surface Height above the GEOID"
+      y_axis_label: "Sea Surface Height above the GEOID"
+    sea_water_potential_temperature:
+      units: "C"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Water Potential Temperature"
+      y_axis_label: "Sea Water Potential Temperature"
+    sea_water_potential_temperature_at_sea_floor:
+      units: "C"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Water Potential Temperature at the Sea Floor"
+      y_axis_label: Sea Floor Temp.
+    sea_water_salinity:
+      units: "psu"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Water Salinity"
+      y_axis_label: "Sea Water Salinity"
+
+
+ITS_LIVE_BASAL_MELT:
+  description: "ITSLive Basal melt data."
+  label: "ITSLive Basal Melt"
+  region: "ice_shelf"
+  variables:
+    firn_air_content:
+      units: "m"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "firn_air_content_uncertainty"
+      measurement_uncertainty_type: "std"
+      label: "Firn Air Content"
+      y_axis_label: "Firn Air Content"
+    height_change:
+      units: "m"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "height_change_uncertainty"
+      measurement_uncertainty_type: "std"
+      label: "Elevation Change"
+      y_axis_label: "Elevation Change"
+    land_ice_basal_melt_rate:
+      units: "m yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_basal_melt_rate_uncertainty"
+      measurement_uncertainty_type: "std"
+      label: "Basal Melt Rate"
+      y_axis_label: "Basal Melt Rate"
+    land_ice_thickness:
+      units: "m"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_thickness_uncertainty"
+      measurement_uncertainty_type: "std"
+      label: "Land Ice Thickness"
+      y_axis_label: "Land Ice Thickness"
+    surface_mass_balance:
+      units: "m yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "surface_mass_balance_uncertainty"
+      measurement_uncertainty_type: "std"
+      label: "Surface Mass Balance"
+      y_axis_label: "Surface Mass Balance"
+
+
+POLAR_PLUS_ICE_SHELVES_MASS_BALANCE_COMPONENTS:
+  description: "Ice shelf mass balance components from the Polar+ Ice Shelves project."
+  label: "Polar+ Ice Shelves Ice Shelf Mass Balance Components"
+  region: "ice_shelf"
+  variables:
+    basal_melt_flux:
+      units: "Gt yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "basal_melt_flux_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Basal Melt Flux"
+      y_axis_label: "Basal Melt Flux"
+    calving:
+      units: "Gt yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "calving_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Calving"
+      y_axis_label: "Calving"
+    discharge:
+      units: "Gt yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "discharge_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Discharge"
+      y_axis_label: "Discharge"
+    surface_mass_balance:
+      units: "Gt yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "surface_mass_balance_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Surface Mass Balance"
+      y_axis_label: "Surface Mass Balance"
+    cumulative_discharge_change:
+      units: "Gt"
+      timeseries_type: "cummulative"
+      measurement_uncertainties: "cumulative_discharge_change_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Cumulative Discharge Change"
+      y_axis_label: "Cumulative Discharge Change"
+    cumulative_surface_mass_balance_anomalies:
+      units: "Gt"
+      timeseries_type: "cummulative"
+      measurement_uncertainties: "cumulative_surface_mass_balance_anomalies_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Cumulative Surface Mass Balance Anomalies"
+      y_axis_label: "Cumulative Surface Mass Balance Anomalies"
+    cumulative_thinning:
+      units: "Gt"
+      timeseries_type: "cummulative"
+      measurement_uncertainties: "cumulative_thinning_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Cumulative Thinning"
+      y_axis_label: "Cumulative Thinning"
+    cumulative_retreat:
+      units: "Gt"
+      timeseries_type: "cummulative"
+      measurement_uncertainties: "cumulative_retreat_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Cumulative Retreat"
+      y_axis_label: "Cumulative Retreat"
+    cumulative_mass_change:
+      units: "Gt"
+      timeseries_type: "cummulative"
+      measurement_uncertainties: "cumulative_mass_change_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Cumulative Mass Change"
+      y_axis_label: "Cumulative Mass Change"
+
+
+POLAR_PLUS_ICE_SHELVES_BASAL_MELT_TIMESERIES:
+  description: "Basal melt timeseries from the Polar+ Ice Shelves project."
+  label: "Polar+ Ice Shelves Basal Melt Timeseries"
+  region: "ice_shelf"
+  variables:
+    land_ice_basal_melt_rate:
+      units: "m yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "land_ice_basal_melt_rate_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Basal Melt Timeseries"
+      y_axis_label: "Basal Melt Timeseries"
+
+
+RACMO:
+  description: "The RACMO SMB variable."
+  label: "RACMO"
+  region: "ice_shelf"
+  variables:
+    surface_mass_balance_glaciated:
+      units: "mm w.e. yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Surface Mass Balance"
+      y_axis_label: "Surface Mass Balance"
+
+
+4D_ANTARCTICA_SUBGLACIAL_LAKES:
+  description: "The 4D Antarctica Subglacial Lakes dataset."
+  label: "4D Antarctica Subglacial Lakes - Thwaites only"
+  region: "ice_shelf"
+  variables:
+    height_above_wgs84_ellipsoid:
+      units: "m"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "height_above_wgs84_ellipsoid_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Elevation"
+      y_axis_label: ""
+    rate_of_volume_change:
+      units: "m3 yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Rate of Volume Change"
+      y_axis_label: ""
+    volume_change:
+      units: "m3 yr-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "volume_change_uncertainties"
+      measurement_uncertainty_type: "std"
+      label: "Volume Change"
+      y_axis_label: ""
+
+4D_ANTARCTICA_SURFACE_MELT_MAPS:
+  description: "Daily Surface Melt Maps dataset."
+  label: "Daily Surface Melt Maps (Picard et al. 2006)"
+  region: "ice_shelf"
+  variables:
+    melt:
+      units: "#"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Surface Melt"
+      y_axis_label: ""
+    rawmelt:
+      units: "#"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Surface Melt (raw)"
+      y_axis_label: ""
+
+
+SOUTHERN_ANNULAR_MODE:
+  description: "Southern Annular Mode Index."
+  label: "SAM Index"
+  region: "antarctica_wide"
+  variables:
+    southern_annular_mode_index:
+      units: "#"
+      timeseries_type: "derivative"
+      measurement_uncertainty_type: null
+      measurement_uncertainties: null
+      label: "Temperature"
+      y_axis_label: "SAM Index"
+
+
+ANTARCTIC_OSCILLATION:
+  description: "Antarctic Oscillation Index."
+  label: "AAO Index"
+  region: "antarctica_wide"
+  variables:
+    antarctic_oscillation_index:
+      units: "#"
+      timeseries_type: "derivative"
+      measurement_uncertainty_type: null
+      measurement_uncertainties: null
+      label: "Temperature"
+      y_axis_label: "AAO Index"
+
+
+moorings:
+  description: "Processed time series from the Thwaites paper."
+  label: "Ocean Moorings (Gourmelen et al. 2025) - Thwaites only"
+  region: "ocean"
+  variables:
+    0_8_degree_c_isotherm_depth:
+      units: "m"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "0.8C isotherm depth"
+      y_axis_label: "0.8C isotherm depth"
+
+basal_melt_anomalies_pine_island:
+  description: "Processed time series from the Thwaites paper."
+  label: "Basal Melt Anomalies - Pine Island (Gourmelen et al. 2025) - Thwaites only"
+  region: "ocean"
+  variables:
+    basal_melt_anomalies:
+        units: "m"
+        timeseries_type: "derivative"
+        measurement_uncertainties: "basal_melt_anomalies_uncertainties"
+        measurement_uncertainty_type: std
+        label: "Basal melt anomalies - Pine Island"
+        y_axis_label: "Basal melt anomalies - Pine Island"
+
+subglacial_lake_discharge:
+  description: "Processed time series from the Thwaites paper."
+  label: "Subglacial Lake Discharge (Gourmelen et al. 2025) - Thwaites only"
+  region: "ocean"
+  variables:
+    lake_discharge:
+      units: "m3 s-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Subglacial lake discharge"
+      y_axis_label: "Subglacial lake discharge"
+
+basal_melt_anomalies_thwaites:
+  description: "Processed time series from the Thwaites paper."
+  label: "Basal Melt Anomalies - Thwaites (Gourmelen et al. 2025) - Thwaites only"
+  region: "ocean"
+  variables:
+    basal_melt_anomalies:
+      units: "m"
+      timeseries_type: "derivative"
+      measurement_uncertainties: "basal_melt_anomalies_uncertainties"
+      measurement_uncertainty_type: std
+      label: "Basal melt anomalies - Thwaites"
+      y_axis_label: "Basal melt anomalies - Thwaites"

@@ -14,7 +14,6 @@ from lxml import html
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
-print(CURRENT_DIR)
 SCRIPTS_DIR = os.path.dirname(CURRENT_DIR)
 PREFIX = os.path.dirname(SCRIPTS_DIR)
 

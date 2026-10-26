@@ -8,9 +8,10 @@ Usage (in a notebook cell)::
     from notebook_helpers.authentication_widget import request_api_token
 
     token_widget = request_api_token()
+    await token_widget.wait_until_authenticated()
 
-The token is checked when the user presses "Submit". The cell itself does not wait for this, so the user is
-asked to run the next cell once the token has been accepted.
+The token is checked when the user presses "Submit". Awaiting authentication keeps the cell running until
+a token is accepted, without blocking widget interactions.
 
 If the ``DTC_API_TOKEN`` environment variable is set, its token is filled in and checked automatically. Use this
 in VS Code, which does not support pasting into the input box.
@@ -27,7 +28,10 @@ import ipywidgets as widgets
 import dtc_query_client
 from dtc_query_client import ApiClient, ApiResponse, Configuration
 from dtc_query_client.exceptions import ApiException
+from ipykernel import version_info as kernel_version
+from IPython import get_ipython
 from IPython.display import display
+from jupyter_ui_poll import ui_events
 
 from .cell_spinner import BusyIndicator
 
@@ -43,8 +47,8 @@ PLACEHOLDER = "paste your API token here..."
 SUBMIT_TEXT = "Submit"
 EMPTY_TOKEN_MESSAGE = "Please paste an API token before submitting."
 CHECKING_MESSAGE = "Checking API token"
-VALID_TOKEN_MESSAGE = "API token is valid. Please continue by running the next cell."
-INVALID_TOKEN_MESSAGE = "API token not authenticated, please try again"
+VALID_TOKEN_MESSAGE = "✅ API token is valid. Please continue by running the next cell."
+INVALID_TOKEN_MESSAGE = "❌ API token not authenticated, please try again"
 CHECK_TIMEOUT_S = 5.0
 TIMEOUT_MESSAGE = (
     f"The API did not respond within {CHECK_TIMEOUT_S:g} s, please try again"
@@ -130,6 +134,7 @@ class ApiTokenWidget(widgets.VBox):
         self.status = BusyIndicator()
         self.token: str | None = None
         self._check_task: asyncio.Future | None = None
+        self._authenticated = asyncio.Event()
 
         self.submit_button.on_click(self._on_submit)
         super().__init__(
@@ -145,6 +150,25 @@ class ApiTokenWidget(widgets.VBox):
         """Return True once a valid token has been submitted."""
         return self.token is not None
 
+    async def wait_until_authenticated(self) -> None:
+        """Wait for a valid token, allowing widget interactions and retries while waiting."""
+        if self._authenticated.is_set():
+            return
+        shell = get_ipython()
+        if (
+            shell is None
+            or getattr(shell, "kernel", None) is None
+            or kernel_version >= (7,)
+        ):
+            await self._authenticated.wait()
+            return
+
+        # Older kernels queue widget messages behind the currently executing cell.
+        async with ui_events() as poll:
+            while not self._authenticated.is_set():
+                await poll(10)
+                await asyncio.sleep(0.05)
+
     def _on_submit(self, _button: widgets.Button) -> None:
         self.submit()
 
@@ -157,6 +181,7 @@ class ApiTokenWidget(widgets.VBox):
 
         previous_client = self.dtc_client
         self.token = None
+        self._authenticated.clear()
         self.dtc_client = ApiClient(Configuration(host=API_HOST, access_token=token))
         check = self._check_token(token, previous_client)
         try:
@@ -188,6 +213,7 @@ class ApiTokenWidget(widgets.VBox):
             os.environ[TOKEN_ENV_VAR] = token
             self.token = token
             self.status.stop(VALID_TOKEN_MESSAGE)
+            self._authenticated.set()
         else:
             await self._discard_client()
             self.status.stop(

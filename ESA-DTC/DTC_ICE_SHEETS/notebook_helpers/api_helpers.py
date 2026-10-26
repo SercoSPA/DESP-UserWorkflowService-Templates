@@ -85,9 +85,11 @@ def get_precomputed_mass_balance_dataset_url(dataset: str) -> str:
     """
     if dataset not in ["greenland", "antarctic", "greenland_and_antarctic"]:
         raise ValueError(f"Unknown dataset: {dataset}")
-    return requests.get(
+    response = requests.get(
         f"{DTC_QUERY_API_URL}/mass-balance/{dataset}", timeout=GENERAL_API_TIMEOUT, headers=get_auth_headers()
-    ).json()["url"]
+    )
+    response.raise_for_status()
+    return response.json()["url"]
 
 
 def run_selrem_module(

@@ -1,10 +1,11 @@
 #!/bin/bash
 
+# define settings & constants 
 set -e
 ENV_NAME="esa_dtc_ice_sheets_env"
 SCRIPT_DIR=$(dirname "$0")
 
-# check if environment already exists and remove it
+# check if environment already exists and prompt user if so
 if [ -d "/home/jovyan/$ENV_NAME" ]; then
     echo "Environment $ENV_NAME already exists. Remove it with setup-scripts/remove-virtual-environment.sh before creating it"
     exit 1

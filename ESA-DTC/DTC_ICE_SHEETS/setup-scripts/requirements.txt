@@ -1,0 +1,5 @@
+ipydatetime==1.2.0
+jupyter-ui-poll==1.1.0
+dtc-query-client==1.0.9
+contextily==1.7.1
+wrapt==1.10.10  # need to set wrapt<2.0.0 to avoid dependency issue with aiobotocore

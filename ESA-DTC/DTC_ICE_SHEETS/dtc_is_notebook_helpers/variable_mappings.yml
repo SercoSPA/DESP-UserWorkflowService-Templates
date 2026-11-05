@@ -259,7 +259,7 @@ ITS_LIVE_BASAL_MELT:
 
 POLAR_PLUS_ICE_SHELVES_MASS_BALANCE_COMPONENTS:
   description: "Ice shelf mass balance components from the Polar+ Ice Shelves project."
-  label: "Polar+ Ice Shelves Ice Shelf Mass Balance Components"
+  label: "Polar plus Ice Shelves Ice Shelf Mass Balance Components"
   region: "ice_shelf"
   variables:
     basal_melt_flux:
@@ -329,7 +329,7 @@ POLAR_PLUS_ICE_SHELVES_MASS_BALANCE_COMPONENTS:
 
 POLAR_PLUS_ICE_SHELVES_BASAL_MELT_TIMESERIES:
   description: "Basal melt timeseries from the Polar+ Ice Shelves project."
-  label: "Polar+ Ice Shelves Basal Melt Timeseries"
+  label: "Polar plus Ice Shelves Basal Melt Timeseries"
   region: "ice_shelf"
   variables:
     land_ice_basal_melt_rate:
@@ -402,6 +402,18 @@ RACMO:
       label: "Surface Melt (raw)"
       y_axis_label: ""
 
+BAS_OCEAN_MOORINGS:
+  description: "In situ ocean moorings data."
+  label: "Ocean Moorings"
+  region: "ocean"
+  variables:
+    temperature:
+      units: "C"
+      timeseries_type: "derivative"
+      measurement_uncertainty_type: null
+      measurement_uncertainties: null
+      label: "Temperature"
+      y_axis_label: "Mooring Temp"
 
 SOUTHERN_ANNULAR_MODE:
   description: "Southern Annular Mode Index."
@@ -416,7 +428,6 @@ SOUTHERN_ANNULAR_MODE:
       label: "Temperature"
       y_axis_label: "SAM Index"
 
-
 ANTARCTIC_OSCILLATION:
   description: "Antarctic Oscillation Index."
   label: "AAO Index"
@@ -429,7 +440,6 @@ ANTARCTIC_OSCILLATION:
       measurement_uncertainties: null
       label: "Temperature"
       y_axis_label: "AAO Index"
-
 
 moorings:
   description: "Processed time series from the Thwaites paper."
@@ -482,3 +492,23 @@ basal_melt_anomalies_thwaites:
       measurement_uncertainty_type: std
       label: "Basal melt anomalies - Thwaites"
       y_axis_label: "Basal melt anomalies - Thwaites"
+
+SEANOE_SOUTHERN_OCEAN_TEMPERATURE_AND_SALINITY_PROFILES:
+  description: "Southern Ocean temperature and salinity profiles from SEANOE."
+  label: "SEANOE Southern Ocean temperature and salinity profiles"
+  region: "ocean"
+  variables:
+    sea_water_conservative_temperature:
+      units: "°K"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Water Conservative Temperature"
+      y_axis_label: "Sea Water Conservative Temperature"
+    sea_water_absolute_salinity:
+      units: "g kg-1"
+      timeseries_type: "derivative"
+      measurement_uncertainties: null
+      measurement_uncertainty_type: null
+      label: "Sea Water Absolute Salinity"
+      y_axis_label: "Sea Water Absolute Salinity"

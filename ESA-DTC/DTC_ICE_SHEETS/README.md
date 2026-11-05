@@ -60,5 +60,6 @@ Each notebook requires a DTC-IS API token for authentication, and will prompt yo
 
 Each notebook contains a comprehensive description of its purpose and methodology. A short overview is provided below for orientation purposes.
 
+1. DTC-IS-DataLinkages.ipynb - Explore the state and fate of Antarctic ice shelves. Use the DTC-IS data linkage module to investigate relationships between ice-shelf variables.
 1. DTC-IS-SLR.ipynb - Explore how changes in terrestrial water mass, such as those resulting from ice-sheet melt, affect global and regional sea level.
 1. DTC-IS-SLR-PROJ.ipynb - Use mass balance projections based on different ice sheet modelling datasets to play out future sea levels at both global and regional locations.

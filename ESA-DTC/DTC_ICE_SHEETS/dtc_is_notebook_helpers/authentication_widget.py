@@ -162,17 +162,18 @@ class ApiTokenWidget(widgets.VBox):
         """Wait for a valid token, allowing widget interactions and retries while waiting."""
         if self._authenticated.is_set():
             return
-        with suppress_cell_spinner():
-            shell = get_ipython()
-            if shell is None or getattr(shell, "kernel", None) is None or kernel_version >= (7, 4):
+        
+        shell = get_ipython()
+        if shell is None or getattr(shell, "kernel", None) is None or kernel_version >= (7, 4):
+            with suppress_cell_spinner():
                 await self._authenticated.wait()
                 return
 
-            # Older kernels queue widget messages behind the currently executing cell.
-            async with ui_events() as poll:
-                while not self._authenticated.is_set():
-                    await poll(10)
-                    await asyncio.sleep(0.05)
+        # Older kernels queue widget messages behind the currently executing cell.
+        async with ui_events() as poll:
+            while not self._authenticated.is_set():
+                await poll(10)
+                await asyncio.sleep(0.05)
 
     def _on_submit(self, _button: widgets.Button) -> None:
         self.submit()
